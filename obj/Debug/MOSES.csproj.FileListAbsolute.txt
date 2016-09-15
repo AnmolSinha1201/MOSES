@@ -1,0 +1,14 @@
+C:\Users\Nick\Documents\Visual Studio 2015\Projects\MOSES\bin\Debug\MOSES.dll
+C:\Users\Nick\Documents\Visual Studio 2015\Projects\MOSES\bin\Debug\MOSES.pdb
+C:\Users\Nick\Documents\Visual Studio 2015\Projects\MOSES\obj\Debug\MOSES.csprojResolveAssemblyReference.cache
+C:\Users\Nick\Documents\Visual Studio 2015\Projects\MOSES\obj\Debug\MOSES.dll
+C:\Users\Nick\Documents\Visual Studio 2015\Projects\MOSES\obj\Debug\MOSES.pdb
+C:\Users\Nick\Documents\Visual Studio 2015\Projects\MOSES\bin\Debug\Antlr4.Runtime.dll
+C:\Users\Nick\Documents\Visual Studio 2015\Projects\MOSES\bin\Debug\Antlr4.Runtime.xml
+C:\Users\Nick\Documents\Visual Studio 2015\Projects\MOSES\obj\Debug\MosesLexer.cs
+C:\Users\Nick\Documents\Visual Studio 2015\Projects\MOSES\obj\Debug\MosesParser.cs
+C:\Users\Nick\Documents\Visual Studio 2015\Projects\MOSES\obj\Debug\MosesListener.cs
+C:\Users\Nick\Documents\Visual Studio 2015\Projects\MOSES\obj\Debug\MosesBaseListener.cs
+C:\Users\Nick\Documents\Visual Studio 2015\Projects\MOSES\obj\Debug\MosesVisitor.cs
+C:\Users\Nick\Documents\Visual Studio 2015\Projects\MOSES\obj\Debug\MosesBaseVisitor.cs
+C:\Users\Nick\Documents\Visual Studio 2015\Projects\MOSES\obj\Debug\MOSES.csproj.Antlr4GeneratedCodeFileListAbsolute.txt

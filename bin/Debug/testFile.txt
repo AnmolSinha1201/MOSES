@@ -1,0 +1,10 @@
+asd = 1
+qwe(asd)
+zxc = asd + 1
+
+qwe(asd)
+{
+	asd = asd + 5
+}
+
+
