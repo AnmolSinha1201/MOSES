@@ -102,9 +102,8 @@ this
     ;
 
 complexFunctionCall
-    : this '.' complexFunctionCall
-    | variableOrFunction '.' functionCall
-    | functionCall
+    : (this '.')? variableOrFunction '.' functionCall
+    | (this '.')? functionCall
     ;
 
 complexVariable

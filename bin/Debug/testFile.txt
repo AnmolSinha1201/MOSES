@@ -1,8 +1,9 @@
 asd = 1
-zxc = asd + 1
+qwe = 2
+qwe(asd)
+asd = qwe + 3
 
-class qwe
+qwe(asd )
 {
-	asd = 10
+	_.qwe = asd + 2
 }
-

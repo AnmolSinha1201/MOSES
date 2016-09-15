@@ -68,7 +68,6 @@ namespace MOSES
 			};
 
 			STable.addFunction(null, context.functionDef().NAME().ToString(), function);
-			
 			return false;
 		}
 

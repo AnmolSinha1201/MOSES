@@ -66,6 +66,25 @@ namespace MOSES
 		Stack<classDef> functionParentStack = new Stack<classDef>(); //to track this.varOrFunc
 		classDef currentParent = null; //to track this.varOrFunc
 
+		internal void newFunctionContext(classDef parent, Dictionary<string, variable> vList)
+		{
+			functionParentStack.Push(currentParent);
+			currentParent = parent;
+
+			classDepthStack.Push(currentClassDef);
+			currentClassDef = new classDef();
+			var globalCDef = getGlobalCDef();
+			currentClassDef.classTable = globalCDef.classTable; //shallow
+			currentClassDef.funcTable = globalCDef.funcTable; //shallow
+			currentClassDef.varTable = vList; //shallow of new
+		}
+
+		internal void restoreFunctionContext()
+		{
+			currentClassDef = classDepthStack.Pop();
+			currentParent = functionParentStack.Pop();
+		}
+
 		internal classDef getParent()
 		{
 			return currentParent;
