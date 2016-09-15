@@ -1,10 +1,8 @@
 asd = 1
-qwe(asd)
 zxc = asd + 1
 
-qwe(asd)
+class qwe
 {
-	asd = asd + 5
+	asd = 10
 }
-
 

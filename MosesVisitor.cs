@@ -9,9 +9,9 @@ namespace MOSES
 {
 	class MosesVisitor : MosesBaseVisitor<object>
 	{
-		static SymbolTable.classDef cDef = null;
-		static string vName = null;
-		SymbolTable STable = null;
+		SymbolTable.classDef cDef = null;
+		string vName = null;
+		internal SymbolTable STable = null;
 
 		public override object VisitVariableFetch([NotNull] MosesParser.VariableFetchContext context)
 		{

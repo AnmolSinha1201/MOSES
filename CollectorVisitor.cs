@@ -10,7 +10,7 @@ namespace MOSES
 	class CollectorVisitor : MosesBaseVisitor<object>
 	{
 		bool bSkip = true; //to prevent collecting variables outside classes
-		SymbolTable STable = null;
+		internal SymbolTable STable = null;
 		public override object VisitClassDecl([NotNull] MosesParser.ClassDeclContext context)
 		{
 			bSkip = false;
