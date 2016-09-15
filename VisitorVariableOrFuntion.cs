@@ -7,7 +7,7 @@ using Antlr4.Runtime.Misc;
 
 namespace MOSES
 {
-	class MosesVisitor : MosesBaseVisitor<object>
+	partial class MosesVisitor : MosesBaseVisitor<object>
 	{
 		SymbolTable.classDef cDef = null;
 		string vName = null;

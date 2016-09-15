@@ -56,7 +56,8 @@
     <Compile Include="Moses.g4.parser.cs">
       <DependentUpon>Moses.g4</DependentUpon>
     </Compile>
-    <Compile Include="MosesVisitor.cs" />
+    <Compile Include="VisitorOperations.cs" />
+    <Compile Include="VisitorVariableOrFuntion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Runtime.cs" />
     <Compile Include="STableClass.cs" />
