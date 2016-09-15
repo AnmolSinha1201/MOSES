@@ -1,9 +1,6 @@
-asd = 1
-qwe = 2
-qwe(asd)
-asd = qwe + 3
+qwe(12)
 
-qwe(asd )
+qwe(qwe*)
 {
-	_.qwe = asd + 2
+	asd = qwe[0] + 10
 }

@@ -17,8 +17,7 @@ namespace MOSES
 			cDef = context.@this() == null ? null : STable.getParent();
 			if (context.variableOrFunction() != null) //this.?variableOrFunction.functionCall
 				Visit(context.variableOrFunction());
-			Visit(context.functionCall());
-			return false;
+			return Visit(context.functionCall());
 		}
 
 		
@@ -30,22 +29,32 @@ namespace MOSES
 			var funcSig = STable.getFunction(cDef, context.NAME().ToString(), context.exp().Count());
 			if (funcSig == null)
 			{ }
-			
+
 			if (funcSig._delegate != null)
 			{ }
 			else
-				execUDF(context, funcSig);
-			return base.VisitFunctionCall(context);
+			{
+				object val = execUDF(context, funcSig);
+				cDef = val as SymbolTable.classDef; //for func().something chaining
+				return val;
+			}
+			return null;
 		}
 
-		void execUDF(MosesParser.FunctionCallContext fcContext, SymbolTable.functionDef fDef)
+		object execUDF(MosesParser.FunctionCallContext fcContext, SymbolTable.functionDef fDef)
 		{
 			var paramList = prepareParams(fcContext, fDef);
 			var namedList = addNameToParams(fDef.functionParamterList, paramList);
+
 			STable.newFunctionContext(cDef, namedList);
 			foreach (MosesParser.InnerfunctionBlockContext ifb in (MosesParser.InnerfunctionBlockContext[])fDef.functionAST)
+			{
+				if (ifb.returnBlock() != null)
+					return Visit(ifb.returnBlock().exp());
 				Visit(ifb);
+			}
 			STable.restoreFunctionContext();
+			return null;
 		}
 
 		List<SymbolTable.variable> prepareParams(MosesParser.FunctionCallContext fcContext, SymbolTable.functionDef fDef)
@@ -67,7 +76,6 @@ namespace MOSES
 				}
 				paramList.Add(var);
 			}
-
 			if (!fDef.isVariadic)
 				return paramList;
 

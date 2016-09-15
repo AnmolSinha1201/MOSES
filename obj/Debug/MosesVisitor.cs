@@ -182,6 +182,13 @@ public interface IMosesVisitor<Result> : IParseTreeVisitor<Result> {
 	Result VisitInnerfunctionBlock([NotNull] MosesParser.InnerfunctionBlockContext context);
 
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="MosesParser.returnBlock"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitReturnBlock([NotNull] MosesParser.ReturnBlockContext context);
+
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="MosesParser.loopBlock"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

@@ -315,6 +315,19 @@ public partial class MosesBaseListener : IMosesListener {
 	public virtual void ExitInnerfunctionBlock([NotNull] MosesParser.InnerfunctionBlockContext context) { }
 
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="MosesParser.returnBlock"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterReturnBlock([NotNull] MosesParser.ReturnBlockContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="MosesParser.returnBlock"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitReturnBlock([NotNull] MosesParser.ReturnBlockContext context) { }
+
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="MosesParser.loopBlock"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>

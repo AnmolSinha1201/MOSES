@@ -30,6 +30,7 @@ namespace MOSES
 			var collector = new CollectorVisitor();
 			collector.STable = STable;
 			collector.Visit(tree);
+
 			var visitor = new MosesVisitor();
 			visitor.STable = STable;
 			Console.WriteLine(visitor.Visit(tree));

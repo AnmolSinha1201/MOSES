@@ -273,6 +273,17 @@ public interface IMosesListener : IParseTreeListener {
 	void ExitInnerfunctionBlock([NotNull] MosesParser.InnerfunctionBlockContext context);
 
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="MosesParser.returnBlock"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterReturnBlock([NotNull] MosesParser.ReturnBlockContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="MosesParser.returnBlock"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitReturnBlock([NotNull] MosesParser.ReturnBlockContext context);
+
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="MosesParser.loopBlock"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

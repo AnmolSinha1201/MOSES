@@ -28,7 +28,8 @@ namespace MOSES
 			var contextPList = context.functionDef().functionParameterList();
 			bool isVariadic = false;
 
-			for (int i = 0; i < contextPList.functionParameterNoDefault().Count(); i++)
+			int iters = contextPList == null ? 0 : contextPList.functionParameterNoDefault().Count();
+            for (int i = 0; i < iters; i++)
 			{
 				var fParam = new SymbolTable.functionDef.functionParameter()
 				{
@@ -38,7 +39,8 @@ namespace MOSES
 				parameterList.Add(fParam);
 			}
 
-			for (int i = 0; i < contextPList.functionParameterDefault().Count(); i++)
+			iters = contextPList == null ? 0 : contextPList.functionParameterDefault().Count();
+			for (int i = 0; i < iters; i++)
 			{
 				var fParam = new SymbolTable.functionDef.functionParameter()
 				{
@@ -48,8 +50,8 @@ namespace MOSES
 				};
 				parameterList.Add(fParam);
 			}
-
-			if (contextPList.functionPrameterVariadic() != null)
+			
+			if (contextPList?.functionPrameterVariadic() != null)
 			{
 				isVariadic = true;
 				var fParam = new SymbolTable.functionDef.functionParameter()
@@ -58,15 +60,15 @@ namespace MOSES
 				};
 				parameterList.Add(fParam);
 			}
-
+			
 			var function = new SymbolTable.functionDef()
 			{
 				functionAST = context.functionBody().innerfunctionBlock(),
 				functionParamterList = parameterList,
 				isVariadic = isVariadic,
-				minParamCount = contextPList.functionParameterNoDefault().Count()
+				minParamCount = contextPList == null ? 0 : contextPList.functionParameterNoDefault().Count()
 			};
-
+			
 			STable.addFunction(null, context.functionDef().NAME().ToString(), function);
 			return false;
 		}

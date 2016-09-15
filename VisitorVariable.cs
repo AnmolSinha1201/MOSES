@@ -33,20 +33,25 @@ namespace MOSES
 			cDef = context.@this() == null ? null : STable.getParent(); //null = currentCDef
 			if (context.variableOrFunction() != null) //this.?varOrFunction.var
 				Visit(context.variableOrFunction());
-			vName = context.var().NAME().ToString();
+			if (context.var() != null)
+				vName = context.var().NAME().ToString();
+			else //this.?varOrFunction[key]
+				vName = Visit(context.exp()) as string;
 			return false;
 		}
 
 		public override object VisitVariableOrFunction([NotNull] MosesParser.VariableOrFunctionContext context)
 		{
-			if (context.var() != null) //var
-			{ }
-			else if (context.functionCall() != null) // functionCall
-			{ }
-			else if (context.exp() != null) // variableOrFunction[exp]
-			{ }
-			else //variableOrFunction.variableOrFunction
-			{ }
+			// var / functionCall / variableOrFunction.variableOrFunction managed by filter
+			if (context.exp() != null) // variableOrFunction[exp]. 1st part already visited
+			{
+				Visit(context.variableOrFunction(0));
+				if (cDef == null) //chaining error
+				{ }
+				var cDefTemp = cDef;
+				object val = Visit(context.exp());
+				cDef = STable.getVariable(cDefTemp, val as string) as SymbolTable.classDef;
+			}
 			return base.VisitVariableOrFunction(context);
 		}
 
@@ -59,10 +64,10 @@ namespace MOSES
 
 			if (cDef == null) //no variable or class found
 			{
-				var position = context.Start;
+				//var position = context.Start;
 				//Helper.throwError(Helper.errorCode.nonExistentClass, context.Parent.GetText(), position.Line, position.Column);
 			}
-			return false;
+			return null;
 		}
 
 		public override object VisitString([NotNull] MosesParser.StringContext context)

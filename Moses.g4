@@ -15,7 +15,11 @@ innerfunctionBlock
     | complexFunctionCall
     | loops
     | 'if' '(' exp ')' segmentBlock ('else' segmentBlock)?
-    | 'return' exp?
+    | returnBlock
+    ;
+
+returnBlock
+    : 'return' exp?
     ;
 
 loopBlock
@@ -109,6 +113,7 @@ complexFunctionCall
 complexVariable
     : (this '.')? variableOrFunction '.' var
     | (this '.')? var
+    | (this '.')? variableOrFunction '[' exp ']'
     ;
 
 variableOrFunction
