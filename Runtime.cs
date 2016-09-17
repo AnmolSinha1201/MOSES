@@ -13,7 +13,15 @@ namespace MOSES
 	{
 		public Runtime() : this("testFile.txt")
 		{}
+		
+		object testFunc(int? instance, Interop.IContainer[] args)
+		{
+			args[0].value = 50;
+			return 5;
+		}
 
+
+		public Interop interop = new Interop();
 		public Runtime(string fileName)
 		{
 			var reader = File.OpenText(fileName);
@@ -26,6 +34,8 @@ namespace MOSES
 			Console.WriteLine(tree.ToStringTree(parser));
 
 			SymbolTable STable = new SymbolTable();
+			interop.STable = STable;
+			interop.registerFunction(null, new Interop.functionDelegate(testFunc), "qwe(ref var){}");
 
 			var collector = new CollectorVisitor();
 			collector.STable = STable;
@@ -33,6 +43,7 @@ namespace MOSES
 
 			var visitor = new MosesVisitor();
 			visitor.STable = STable;
+			visitor.interop = interop;
 			Console.WriteLine(visitor.Visit(tree));
 		}
 	}

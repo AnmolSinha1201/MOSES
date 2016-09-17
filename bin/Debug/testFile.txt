@@ -1,6 +1,2 @@
-qwe(12)
-
-qwe(qwe*)
-{
-	asd = qwe[0] + 10
-}
+asd = 10
+qwe(asd)

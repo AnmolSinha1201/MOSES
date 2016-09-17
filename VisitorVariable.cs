@@ -16,7 +16,7 @@ namespace MOSES
 		public override object VisitVariableFetch([NotNull] MosesParser.VariableFetchContext context)
 		{
 			Visit(context.complexVariable());
-			return STable.getVariable(cDef, vName);
+			return STable.getVariable(cDef, vName).value;
 		}
 
 		public override object VisitVarAssign([NotNull] MosesParser.VarAssignContext context)
@@ -50,7 +50,7 @@ namespace MOSES
 				{ }
 				var cDefTemp = cDef;
 				object val = Visit(context.exp());
-				cDef = STable.getVariable(cDefTemp, val as string) as SymbolTable.classDef;
+				cDef = STable.getVariable(cDefTemp, val as string).value as SymbolTable.classDef;
 			}
 			return base.VisitVariableOrFunction(context);
 		}

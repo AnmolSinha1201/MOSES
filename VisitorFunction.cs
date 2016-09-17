@@ -9,6 +9,7 @@ namespace MOSES
 {
 	partial class MosesVisitor : MosesBaseVisitor<object>
 	{
+		internal Interop interop = null;
 		public override object VisitFunctionDecl([NotNull] MosesParser.FunctionDeclContext context)
 		{ return false; }
 
@@ -29,16 +30,19 @@ namespace MOSES
 			var funcSig = STable.getFunction(cDef, context.NAME().ToString(), context.exp().Count());
 			if (funcSig == null)
 			{ }
-
+			
 			if (funcSig._delegate != null)
-			{ }
+			{
+				object val = execHDF(context, funcSig);
+				cDef = val as SymbolTable.classDef; //for func().something chaining
+				return val;
+			}
 			else
 			{
 				object val = execUDF(context, funcSig);
 				cDef = val as SymbolTable.classDef; //for func().something chaining
 				return val;
 			}
-			return null;
 		}
 
 		object execUDF(MosesParser.FunctionCallContext fcContext, SymbolTable.functionDef fDef)
@@ -57,7 +61,16 @@ namespace MOSES
 			return null;
 		}
 
-		List<SymbolTable.variable> prepareParams(MosesParser.FunctionCallContext fcContext, SymbolTable.functionDef fDef)
+		object execHDF(MosesParser.FunctionCallContext fcContext, SymbolTable.functionDef fDef)
+		{
+			var cDefTemp = cDef;
+			var paramList = prepareParams(fcContext, fDef);
+			var args = paramList.ToArray();
+            interop.wrapParameters(args);
+			return fDef._delegate(interop.wrap(cDefTemp), args);
+		}
+
+			List<SymbolTable.variable> prepareParams(MosesParser.FunctionCallContext fcContext, SymbolTable.functionDef fDef)
 		{
 			var paramList = new List<SymbolTable.variable>();
 			int final = fDef.isVariadic ? fDef.functionParamterList.Count - 1 : fDef.functionParamterList.Count;
@@ -67,7 +80,7 @@ namespace MOSES
 				object val = Visit(fcContext.exp(i)) ?? fDef.functionParamterList[i].defaultValue;
 				SymbolTable.variable var = null;
 				if (fDef.functionParamterList[i].byRef)
-					var = STable.getVariableReference(cDef, vName);
+					var = STable.getVariable(cDef, vName);
 				
 				if (var == null)
 				{

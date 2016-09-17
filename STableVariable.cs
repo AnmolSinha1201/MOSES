@@ -26,12 +26,12 @@ namespace MOSES
 				cDef.varTable.Add(varName, new variable() { value = value, vType = getVarTypeLazy(value) });
 		}
 
-		internal object getVariable(classDef cDef, string varName)
+		internal variable getVariable(classDef cDef, string varName)
 		{
-			if (cDef == null)
+            if (cDef == null)
 				cDef = currentClassDef;
 			if (varName != null && cDef.varTable.ContainsKey(varName))
-				return cDef.varTable[varName].value;
+				return cDef.varTable[varName];
 			return null;
 		}
 
@@ -48,15 +48,6 @@ namespace MOSES
 				return Interop.variableType.DOUBLE;
 			else
 				return Interop.variableType.OBJECT;
-		}
-
-		internal variable getVariableReference(classDef cDef, string varName)
-		{
-			if (cDef == null)
-				cDef = currentClassDef;
-			if (varName != null && cDef.varTable.ContainsKey(varName))
-				return cDef.varTable[varName];
-			return null;
 		}
 	}
 }
