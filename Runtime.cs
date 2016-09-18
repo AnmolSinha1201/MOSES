@@ -16,10 +16,10 @@ namespace MOSES
 		
 		object testFunc(int? instance, Interop.IContainer[] args)
 		{
-			args[0].value = 50;
-			return 5;
+			Console.WriteLine(interop.getVariable(args[0], 0)?.value);
+			interop.setVariable(null, "qwe", 100);
+            return 5;
 		}
-
 
 		public Interop interop = new Interop();
 		public Runtime(string fileName)
@@ -34,14 +34,15 @@ namespace MOSES
 			Console.WriteLine(tree.ToStringTree(parser));
 
 			SymbolTable STable = new SymbolTable();
+			var visitor = new MosesVisitor();
 			interop.STable = STable;
-			interop.registerFunction(null, new Interop.functionDelegate(testFunc), "qwe(ref var){}");
+			interop.MVisitor = visitor;
+			interop.registerFunction(null, new Interop.functionDelegate(testFunc), "qwe(var*){}");
 
 			var collector = new CollectorVisitor();
 			collector.STable = STable;
 			collector.Visit(tree);
-
-			var visitor = new MosesVisitor();
+			
 			visitor.STable = STable;
 			visitor.interop = interop;
 			Console.WriteLine(visitor.Visit(tree));

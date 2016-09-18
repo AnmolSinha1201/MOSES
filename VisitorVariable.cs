@@ -9,21 +9,21 @@ namespace MOSES
 {
 	partial class MosesVisitor : MosesBaseVisitor<object>
 	{
-		SymbolTable.classDef cDef = null;
+		internal SymbolTable.classDef cDef = null;
 		string vName = null;
 		internal SymbolTable STable = null;
 
 		public override object VisitVariableFetch([NotNull] MosesParser.VariableFetchContext context)
 		{
 			Visit(context.complexVariable());
-			return STable.getVariable(cDef, vName).value;
+			return STable.getVariable(cDef, vName)?.value;
 		}
 
 		public override object VisitVarAssign([NotNull] MosesParser.VarAssignContext context)
 		{
 			object val = Visit(context.exp());
 			Visit(context.complexVariable());
-			STable.addVariable(cDef, vName, val);
+			STable.setVariable(cDef, vName, val);
 			Console.WriteLine(vName + " = " + val);
 			return val;
 		}
@@ -31,6 +31,7 @@ namespace MOSES
 		public override object VisitComplexVariable([NotNull] MosesParser.ComplexVariableContext context)
 		{
 			cDef = context.@this() == null ? null : STable.getParent(); //null = currentCDef
+			//Console.WriteLine(context.var().NAME() + "" + cDef == null);
 			if (context.variableOrFunction() != null) //this.?varOrFunction.var
 				Visit(context.variableOrFunction());
 			if (context.var() != null)
@@ -50,7 +51,7 @@ namespace MOSES
 				{ }
 				var cDefTemp = cDef;
 				object val = Visit(context.exp());
-				cDef = STable.getVariable(cDefTemp, val as string).value as SymbolTable.classDef;
+				cDef = STable.getVariable(cDefTemp, val as string)?.value as SymbolTable.classDef;
 			}
 			return base.VisitVariableOrFunction(context);
 		}

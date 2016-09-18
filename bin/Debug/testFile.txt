@@ -1,2 +1,7 @@
-asd = 10
-qwe(asd)
+zxc = asd(10)
+asd = tyu + 5
+
+asd(tyu)
+{
+	return tyu + 5
+}

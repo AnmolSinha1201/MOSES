@@ -90,7 +90,7 @@ namespace MOSES
 		public override object VisitLocalConstVarAssign([NotNull] MosesParser.LocalConstVarAssignContext context)
 		{
 			if (!bSkip)
-				STable.addVariable(null, context.NAME().ToString(), Visit(context.constExp()));
+				STable.setVariable(null, context.NAME().ToString(), Visit(context.constExp()));
 			return base.VisitLocalConstVarAssign(context);
 		}
 	}

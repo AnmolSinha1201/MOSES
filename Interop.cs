@@ -80,6 +80,13 @@ namespace MOSES
 			return objectBuffer.Count - 1;
 		}
 
+		IContainer safeWrap(IContainer container)
+		{
+			if (getVarTypeImmediate(container) == variableType.OBJECT)
+				wrap(container);
+			return container;
+		}
+
 		HDFVisitor collector = new HDFVisitor();
 		public void registerFunction(int? instanceID, functionDelegate del, string definition)
 		{
@@ -99,14 +106,92 @@ namespace MOSES
 			collector.Visit(tree);
 		}
 
-		public object getVariable(int? contextID, string name)
+		public IContainer getVariable(IContainer container, string name)
 		{
-			return STable.getVariable(contextID.HasValue?(SymbolTable.classDef)objectBuffer[contextID.Value] : null, name);
+			return getVariable((int?)container?.value, name);
 		}
 
-		public void addVariable(int? contextID, string name, object value)
+		public IContainer getVariable(int contextID, string name)
 		{
-			STable.addVariable(contextID.HasValue ? (SymbolTable.classDef)objectBuffer[contextID.Value] : null, name, value);
+			return getVariable(contextID, name);
+		}
+		public IContainer getVariable(IContainer container, int index)
+		{
+			return getVariable((int?)container?.value, index.ToString());
+		}
+
+		public IContainer getVariable(int contextID, int index)
+		{
+			return getVariable(contextID, index.ToString());
+		}
+
+		IContainer getVariable(int? contextID, string name)
+		{
+			return STable.getVariable(contextID.HasValue? (SymbolTable.classDef)objectBuffer[contextID.Value] : STable.getGlobalCDef(), name);
+		}
+
+		public void setVariable(IContainer container, int index, object value)
+		{
+			setVariable((int?)container?.value, index.ToString(), value);
+		}
+
+		public void setVariable(IContainer container, string name, object value)
+		{
+			setVariable((int?)container?.value, name, value);
+		}
+
+		void setVariable(int? contextID, string name, object value)
+		{
+			STable.setVariable(contextID.HasValue ? (SymbolTable.classDef)objectBuffer[contextID.Value] : STable.getGlobalCDef(), name, value);
+		}
+
+		internal MosesVisitor MVisitor = null;
+		IContainer invokeFunction(int? contextID, string name, IContainer[] args)
+		{
+			var cDef = contextID.HasValue ? (SymbolTable.classDef)objectBuffer[contextID.Value] : STable.getGlobalCDef();
+            var function = STable.getFunction(cDef, name, args.Count());
+			if (function._delegate != null)
+			{ }
+			else
+			{
+				var paramList = prepareParams(args, function);
+				MVisitor.cDef = cDef;
+				object val = MVisitor.execUDF(paramList, function);
+				IContainer container = new IContainer() { value = val, vType = getVarTypeImmediate(val) };
+				return container;
+			}
+			return null;
+		}
+
+
+		//clone of VisitorFUnction.prepareParams. Kept separate for performance issues.
+		List<SymbolTable.variable> prepareParams(IContainer[] args, SymbolTable.functionDef fDef)
+		{
+			var paramList = new List<SymbolTable.variable>();
+			int final = fDef.isVariadic ? fDef.functionParamterList.Count - 1 : fDef.functionParamterList.Count;
+
+			for (int i = 0; i < final; i++)
+			{
+				object val = i < args.Count() ? args[i] : fDef.functionParamterList[i].defaultValue;
+				SymbolTable.variable var = null;
+				if (fDef.functionParamterList[i].byRef)
+					var = (SymbolTable.variable)args[i];
+
+				if (var == null)
+				{
+					var = new SymbolTable.variable();
+					var.value = val; var.vType = i < args.Count() ? args[i].vType : STable.getVarTypeLazy(val);
+				}
+				paramList.Add(var);
+			}
+			if (!fDef.isVariadic)
+				return paramList;
+
+			var variadic = new SymbolTable.classDef();
+			for (int i = final; i < args.Count(); i++)
+				STable.setVariable(variadic, (i - final).ToString(), args[i]);
+			paramList.Add(new SymbolTable.variable() { value = variadic, vType = Interop.variableType.OBJECT });
+			return paramList;
 		}
 	}
 

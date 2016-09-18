@@ -31,40 +31,42 @@ namespace MOSES
 			if (funcSig == null)
 			{ }
 			
+			var paramList = prepareParams(context, funcSig);
 			if (funcSig._delegate != null)
 			{
-				object val = execHDF(context, funcSig);
+				object val = execHDF(paramList, funcSig);
 				cDef = val as SymbolTable.classDef; //for func().something chaining
 				return val;
 			}
 			else
 			{
-				object val = execUDF(context, funcSig);
+				object val = execUDF(paramList, funcSig);
 				cDef = val as SymbolTable.classDef; //for func().something chaining
 				return val;
 			}
 		}
 
-		object execUDF(MosesParser.FunctionCallContext fcContext, SymbolTable.functionDef fDef)
+		internal object execUDF(List<SymbolTable.variable> paramList, SymbolTable.functionDef fDef)
 		{
-			var paramList = prepareParams(fcContext, fDef);
 			var namedList = addNameToParams(fDef.functionParamterList, paramList);
-
 			STable.newFunctionContext(cDef, namedList);
+			object retVal = null;
 			foreach (MosesParser.InnerfunctionBlockContext ifb in (MosesParser.InnerfunctionBlockContext[])fDef.functionAST)
 			{
 				if (ifb.returnBlock() != null)
-					return Visit(ifb.returnBlock().exp());
+				{
+					retVal =  Visit(ifb.returnBlock().exp());
+					break;
+				}
 				Visit(ifb);
 			}
 			STable.restoreFunctionContext();
-			return null;
+			return retVal;
 		}
 
-		object execHDF(MosesParser.FunctionCallContext fcContext, SymbolTable.functionDef fDef)
+		internal object execHDF(List<SymbolTable.variable> paramList, SymbolTable.functionDef fDef)
 		{
 			var cDefTemp = cDef;
-			var paramList = prepareParams(fcContext, fDef);
 			var args = paramList.ToArray();
             interop.wrapParameters(args);
 			return fDef._delegate(interop.wrap(cDefTemp), args);
@@ -77,7 +79,7 @@ namespace MOSES
 
 			for (int i = 0; i < final; i++)
 			{
-				object val = Visit(fcContext.exp(i)) ?? fDef.functionParamterList[i].defaultValue;
+				object val = fcContext.exp(i) != null ? Visit(fcContext.exp(i)) : fDef.functionParamterList[i].defaultValue;
 				SymbolTable.variable var = null;
 				if (fDef.functionParamterList[i].byRef)
 					var = STable.getVariable(cDef, vName);
@@ -94,7 +96,7 @@ namespace MOSES
 
 			var variadic = new SymbolTable.classDef();
 			for (int i = final; i < fcContext.exp().Count(); i++)
-				STable.addVariable(variadic, (i - final).ToString(), Visit(fcContext.exp(i)));
+				STable.setVariable(variadic, (i - final).ToString(), Visit(fcContext.exp(i)));
 			paramList.Add(new SymbolTable.variable() { value = variadic, vType = Interop.variableType.OBJECT });
 			return paramList;
 		}

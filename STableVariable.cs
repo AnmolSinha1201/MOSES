@@ -11,7 +11,7 @@ namespace MOSES
 		internal class variable : Interop.IContainer
 		{ }
 
-		internal void addVariable(classDef cDef, string varName, object value)
+		internal void setVariable(classDef cDef, string varName, object value)
 		{
 			if (cDef == null)
 				cDef = currentClassDef;

@@ -10,7 +10,7 @@ namespace MOSES
 	{
 		internal class functionDef
 		{
-			public object functionAST;
+			public object functionAST = null;
 			public List<functionParameter> functionParamterList = new List<functionParameter>();
 			public Interop.functionDelegate _delegate = null;
 			public bool isVariadic = false;
