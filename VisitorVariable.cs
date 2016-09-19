@@ -38,7 +38,7 @@ namespace MOSES
 				vName = context.var().NAME().ToString();
 			else //this.?varOrFunction[key]
 				vName = Visit(context.exp()) as string;
-			return false;
+			return null;
 		}
 
 		public override object VisitVariableOrFunction([NotNull] MosesParser.VariableOrFunctionContext context)

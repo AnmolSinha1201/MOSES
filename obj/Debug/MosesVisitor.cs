@@ -357,6 +357,13 @@ public interface IMosesVisitor<Result> : IParseTreeVisitor<Result> {
 	Result VisitFunctionCall([NotNull] MosesParser.FunctionCallContext context);
 
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="MosesParser.newInstance"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitNewInstance([NotNull] MosesParser.NewInstanceContext context);
+
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="MosesParser.exp"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

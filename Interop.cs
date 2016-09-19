@@ -118,6 +118,8 @@ namespace MOSES
 		{
 			var cDef = (context as SymbolTable.classDef) ?? STable.getGlobalCDef();
             var function = STable.getFunction(cDef, name, args.Count());
+			if (function == null)
+				return null;
 			if (function._delegate != null)
 			{
 				object val = function._delegate(context, args);
@@ -125,7 +127,7 @@ namespace MOSES
 			}
 			else
 			{
-				var paramList = prepareParams(args, function);
+				var paramList = prepareParams(args, function).ToArray();
 				MVisitor.cDef = cDef;
 				object val = MVisitor.execUDF(paramList, function);
 				return new IContainer() { value = val, vType = getVarTypeImmediate(val) };
@@ -134,7 +136,7 @@ namespace MOSES
 
 
 		//clone of VisitorFUnction.prepareParams. Kept separate for performance issues.
-		List<SymbolTable.variable> prepareParams(IContainer[] args, SymbolTable.functionDef fDef)
+		internal List<SymbolTable.variable> prepareParams(IContainer[] args, SymbolTable.functionDef fDef)
 		{
 			var paramList = new List<SymbolTable.variable>();
 			int final = fDef.isVariadic ? fDef.functionParamterList.Count - 1 : fDef.functionParamterList.Count;

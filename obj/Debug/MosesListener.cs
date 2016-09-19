@@ -548,6 +548,17 @@ public interface IMosesListener : IParseTreeListener {
 	void ExitFunctionCall([NotNull] MosesParser.FunctionCallContext context);
 
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="MosesParser.newInstance"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterNewInstance([NotNull] MosesParser.NewInstanceContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="MosesParser.newInstance"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitNewInstance([NotNull] MosesParser.NewInstanceContext context);
+
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="MosesParser.exp"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

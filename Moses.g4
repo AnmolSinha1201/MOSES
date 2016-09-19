@@ -131,11 +131,15 @@ functionCall
     : NAME '(' exp? (',' exp)* ')'
     ;
 
+newInstance
+	: 'new' complexVariable '(' exp? (',' exp)* ')' 
+	;
+
 exp
     : constExp                                  #constantExp
     | complexVariable                           #variableFetch
     | complexFunctionCall                       #functionFetch
-    | 'new' complexVariable                     #newClassObject
+    | newInstance			                    #newClassObject
     | varAssign                                 #variableAssign
     | operatorUnary variableOrFunction          #unaryVar
     | <assoc=right> exp operatorPower exp       #expOpPow

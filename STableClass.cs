@@ -10,7 +10,6 @@ namespace MOSES
 	{
 		internal class classDef
 		{
-			public bool __Get = false, __Set = false, __Call = false, __New = false, __Delete = false;
 			public Dictionary<string, variable> varTable = new Dictionary<string, variable>();
 			public Dictionary<string, List<functionDef>> funcTable = new Dictionary<string, List<functionDef>>();
 			public Dictionary<string, classDef> classTable = new Dictionary<string, classDef>();

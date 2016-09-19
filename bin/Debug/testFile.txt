@@ -1,6 +1,6 @@
 zxc = qwe(10)[0]
 
-asd(tyu)
+asd(qwe)
 {
-	return tyu + 5
+	return qwe + 5
 }

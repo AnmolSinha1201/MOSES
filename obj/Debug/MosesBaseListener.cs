@@ -640,6 +640,19 @@ public partial class MosesBaseListener : IMosesListener {
 	public virtual void ExitFunctionCall([NotNull] MosesParser.FunctionCallContext context) { }
 
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="MosesParser.newInstance"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterNewInstance([NotNull] MosesParser.NewInstanceContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="MosesParser.newInstance"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitNewInstance([NotNull] MosesParser.NewInstanceContext context) { }
+
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="MosesParser.exp"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>

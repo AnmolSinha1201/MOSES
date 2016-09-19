@@ -30,9 +30,16 @@ namespace MOSES
 			var funcSig = STable.getFunction(cDef, context.NAME().ToString(), context.exp().Count());
 			if (funcSig == null)
 			{ }
-			
-			var paramList = prepareParams(context, funcSig);
-			if (funcSig._delegate != null)
+
+			List<MosesParser.ExpContext> expList = new List<MosesParser.ExpContext>();
+			for (int i = 0; i < context.exp().Count(); i++)
+				expList.Add(context.exp(i));
+
+			var cDefTemp = cDef;
+			var paramList = interop.prepareParams(ToContainerArgs(expList, funcSig.functionParamterList), funcSig).ToArray();
+			cDef = cDefTemp;
+
+            if (funcSig._delegate != null)
 			{
 				object val = execHDF(paramList, funcSig);
 				cDef = val as SymbolTable.classDef; //for func().something chaining
@@ -46,7 +53,7 @@ namespace MOSES
 			}
 		}
 
-		internal object execUDF(List<SymbolTable.variable> paramList, SymbolTable.functionDef fDef)
+		internal object execUDF(Interop.IContainer[] paramList, SymbolTable.functionDef fDef)
 		{
 			var namedList = addNameToParams(fDef.functionParamterList, paramList);
 			STable.newFunctionContext(cDef, namedList);
@@ -64,45 +71,37 @@ namespace MOSES
 			return retVal;
 		}
 
-		internal object execHDF(List<SymbolTable.variable> paramList, SymbolTable.functionDef fDef)
+		internal object execHDF(Interop.IContainer[] paramList, SymbolTable.functionDef fDef)
 		{
-			var cDefTemp = cDef;
-			var args = paramList.ToArray();
-			return fDef._delegate(cDefTemp, args);
+			return fDef._delegate(cDef, paramList);
 		}
 
-			List<SymbolTable.variable> prepareParams(MosesParser.FunctionCallContext fcContext, SymbolTable.functionDef fDef)
+		Interop.IContainer[] ToContainerArgs(List<MosesParser.ExpContext> expContext, List<SymbolTable.functionDef.functionParameter> fParam)
 		{
-			var paramList = new List<SymbolTable.variable>();
-			int final = fDef.isVariadic ? fDef.functionParamterList.Count - 1 : fDef.functionParamterList.Count;
-
-			for (int i = 0; i < final; i++)
+			var containerList = new List<Interop.IContainer>();
+			for (int i = 0; i < expContext.Count; i++)
 			{
-				object val = fcContext.exp(i) != null ? Visit(fcContext.exp(i)) : fDef.functionParamterList[i].defaultValue;
-				SymbolTable.variable var = null;
-				if (fDef.functionParamterList[i].byRef)
-					var = STable.getVariable(cDef, vName);
+				vName = null;
+				object val = Visit(expContext[i]);
+				SymbolTable.variable var = STable.getVariable(cDef, vName); //check or assign
 				
-				if (var == null)
+				if (var == null && vName != null) //vName != null : variable
 				{
-					var = new SymbolTable.variable();
-					var.value = val; var.vType = STable.getVarTypeLazy(val);
+					STable.setVariable(cDef, vName, null); //allocate variable to ensure value is referenced
+					var = STable.getVariable(cDef, vName);
 				}
-				paramList.Add(var);
+				
+				if (var == null || !fParam[i].byRef)
+					var = new SymbolTable.variable() { value = val, vType = STable.getVarTypeLazy(val) }; //clone if not byref
+				containerList.Add(var);
 			}
-			if (!fDef.isVariadic)
-				return paramList;
-
-			var variadic = new SymbolTable.classDef();
-			for (int i = final; i < fcContext.exp().Count(); i++)
-				STable.setVariable(variadic, (i - final).ToString(), Visit(fcContext.exp(i)));
-			paramList.Add(new SymbolTable.variable() { value = variadic, vType = Interop.variableType.OBJECT });
-			return paramList;
+			return containerList.ToArray();
 		}
 
-		Dictionary<string, SymbolTable.variable> addNameToParams(List<SymbolTable.functionDef.functionParameter> fDef, List<SymbolTable.variable> args)
+
+		Dictionary<string, SymbolTable.variable> addNameToParams(List<SymbolTable.functionDef.functionParameter> fDef, Interop.IContainer[] args)
 		{
-			return fDef.Select((x, i) => new { key = x.name, val = args[i] }).ToDictionary(e => e.key, e => e.val);
+			return fDef.Select((x, i) => new { key = x.name, val = args[i] as SymbolTable.variable }).ToDictionary(e => e.key, e => e.val);
 		}
 		
 	}

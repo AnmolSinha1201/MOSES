@@ -57,6 +57,7 @@
       <DependentUpon>Moses.g4</DependentUpon>
     </Compile>
     <Compile Include="VisitorFunction.cs" />
+    <Compile Include="VisitorObject.cs" />
     <Compile Include="VisitorOperations.cs" />
     <Compile Include="VisitorVariable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
