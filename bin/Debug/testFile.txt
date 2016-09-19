@@ -1,5 +1,4 @@
-zxc = asd(10)
-asd = tyu + 5
+zxc = qwe(10)[0]
 
 asd(tyu)
 {

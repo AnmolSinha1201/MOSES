@@ -8,3 +8,5 @@ obj := CLR_CreateObject(asm, "MOSES.Runtime")
 
 obj := ""
 ExitApp
+
+esc::ExitApp	

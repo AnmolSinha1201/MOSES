@@ -53,46 +53,12 @@ namespace MOSES
 			return variableType.OBJECT;
 		}
 
-		public delegate object functionDelegate(int? instance, IContainer[] paramArray);
-
-
-		List<object> objectBuffer = new List<object>();
-		internal void wrapParameters(IContainer[] containerArray)
-		{
-			foreach (var v in containerArray)
-			{
-				toImmediateType(v);
-				if (v.vType == variableType.OBJECT)
-					wrap(v);
-			}
-		}
-
-		internal int wrap(IContainer container)
-		{
-			objectBuffer.Add(container.value);
-			container.value = objectBuffer.Count - 1;
-			return (int)container.value;
-		}
-
-		internal int wrap(SymbolTable.classDef cDef)
-		{
-			objectBuffer.Add(cDef);
-			return objectBuffer.Count - 1;
-		}
-
-		IContainer safeWrap(IContainer container)
-		{
-			if (getVarTypeImmediate(container) == variableType.OBJECT)
-				wrap(container);
-			return container;
-		}
+		public delegate object functionDelegate(object context, IContainer[] paramArray);
 
 		HDFVisitor collector = new HDFVisitor();
-		public void registerFunction(int? instanceID, functionDelegate del, string definition)
+		public void registerFunction(object context, functionDelegate del, string definition)
 		{
-			SymbolTable.classDef cDef = null;
-			if (instanceID.HasValue)
-				cDef = (SymbolTable.classDef)objectBuffer[instanceID.Value];
+			SymbolTable.classDef cDef = (context as SymbolTable.classDef) ?? STable.getGlobalCDef();
 
 			var input = new AntlrInputStream(definition);
 			var lexer = new MosesLexer(input);
@@ -106,61 +72,64 @@ namespace MOSES
 			collector.Visit(tree);
 		}
 
-		public IContainer getVariable(IContainer container, string name)
+		public object getVariable(IContainer container, string name)
 		{
-			return getVariable((int?)container?.value, name);
+			return getVariable(container?.value, name);
 		}
 
-		public IContainer getVariable(int contextID, string name)
+		public object getVariable(IContainer container, int index)
 		{
-			return getVariable(contextID, name);
-		}
-		public IContainer getVariable(IContainer container, int index)
-		{
-			return getVariable((int?)container?.value, index.ToString());
+			return getVariable(container?.value, index.ToString());
 		}
 
-		public IContainer getVariable(int contextID, int index)
+		public object getVariable(object context, int index)
 		{
-			return getVariable(contextID, index.ToString());
+			return getVariable(context, index.ToString());
 		}
 
-		IContainer getVariable(int? contextID, string name)
+		public object getVariable(object context, string name)
 		{
-			return STable.getVariable(contextID.HasValue? (SymbolTable.classDef)objectBuffer[contextID.Value] : STable.getGlobalCDef(), name);
+			return STable.getVariable((context as SymbolTable.classDef) ?? STable.getGlobalCDef(), name)?.value;
 		}
 
 		public void setVariable(IContainer container, int index, object value)
 		{
-			setVariable((int?)container?.value, index.ToString(), value);
+			setVariable(container?.value, index.ToString(), value);
 		}
 
 		public void setVariable(IContainer container, string name, object value)
 		{
-			setVariable((int?)container?.value, name, value);
+			setVariable(container?.value, name, value);
 		}
 
-		void setVariable(int? contextID, string name, object value)
+		public void setVariable(object context, int index, object value)
 		{
-			STable.setVariable(contextID.HasValue ? (SymbolTable.classDef)objectBuffer[contextID.Value] : STable.getGlobalCDef(), name, value);
+			setVariable(context, index.ToString(), value);
+		}
+
+		public void setVariable(object context, string name, object value)
+		{
+			STable.setVariable((context as SymbolTable.classDef) ?? STable.getGlobalCDef(), name, value);
 		}
 
 		internal MosesVisitor MVisitor = null;
-		IContainer invokeFunction(int? contextID, string name, IContainer[] args)
+
+        public IContainer invokeFunction(object context, string name, IContainer[] args)
 		{
-			var cDef = contextID.HasValue ? (SymbolTable.classDef)objectBuffer[contextID.Value] : STable.getGlobalCDef();
+			var cDef = (context as SymbolTable.classDef) ?? STable.getGlobalCDef();
             var function = STable.getFunction(cDef, name, args.Count());
 			if (function._delegate != null)
-			{ }
+			{
+				object val = function._delegate(context, args);
+				return new IContainer() { value = val, vType = getVarTypeImmediate(val) };
+			}
 			else
 			{
 				var paramList = prepareParams(args, function);
 				MVisitor.cDef = cDef;
 				object val = MVisitor.execUDF(paramList, function);
-				IContainer container = new IContainer() { value = val, vType = getVarTypeImmediate(val) };
-				return container;
+				return new IContainer() { value = val, vType = getVarTypeImmediate(val) };
 			}
-			return null;
 		}
 
 
@@ -172,7 +141,7 @@ namespace MOSES
 
 			for (int i = 0; i < final; i++)
 			{
-				object val = i < args.Count() ? args[i] : fDef.functionParamterList[i].defaultValue;
+				object val = i < args.Count() ? args[i].value : fDef.functionParamterList[i].defaultValue;
 				SymbolTable.variable var = null;
 				if (fDef.functionParamterList[i].byRef)
 					var = (SymbolTable.variable)args[i];
@@ -193,6 +162,15 @@ namespace MOSES
 			paramList.Add(new SymbolTable.variable() { value = variadic, vType = Interop.variableType.OBJECT });
 			return paramList;
 		}
+
+		public object newClassDef(object context, string name)
+		{ return STable.addClass(context as SymbolTable.classDef, name); }
+
+		public object getClassDef(object context, string name)
+		{ return STable.getCDefFromCDef(context as SymbolTable.classDef, name); }
+
+		public object createInstance(object context, string name)
+		{ return STable.createInstance(context as SymbolTable.classDef, name); }
 	}
 
 

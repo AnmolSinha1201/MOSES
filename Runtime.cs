@@ -14,11 +14,11 @@ namespace MOSES
 		public Runtime() : this("testFile.txt")
 		{}
 		
-		object testFunc(int? instance, Interop.IContainer[] args)
+		object testFunc(object instance, Interop.IContainer[] args)
 		{
-			Console.WriteLine(interop.getVariable(args[0], 0)?.value);
-			interop.setVariable(null, "qwe", 100);
-            return 5;
+			object o = interop.newClassDef(null, "qwe");
+			interop.setVariable(o, 0, args[0].value);
+			return o;
 		}
 
 		public Interop interop = new Interop();
@@ -37,7 +37,7 @@ namespace MOSES
 			var visitor = new MosesVisitor();
 			interop.STable = STable;
 			interop.MVisitor = visitor;
-			interop.registerFunction(null, new Interop.functionDelegate(testFunc), "qwe(var*){}");
+			interop.registerFunction(null, new Interop.functionDelegate(testFunc), "qwe(var){}");
 
 			var collector = new CollectorVisitor();
 			collector.STable = STable;

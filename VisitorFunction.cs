@@ -68,8 +68,7 @@ namespace MOSES
 		{
 			var cDefTemp = cDef;
 			var args = paramList.ToArray();
-            interop.wrapParameters(args);
-			return fDef._delegate(interop.wrap(cDefTemp), args);
+			return fDef._delegate(cDefTemp, args);
 		}
 
 			List<SymbolTable.variable> prepareParams(MosesParser.FunctionCallContext fcContext, SymbolTable.functionDef fDef)

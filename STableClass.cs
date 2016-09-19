@@ -32,6 +32,28 @@ namespace MOSES
 			currentClassDef = classDepthStack.Pop();
 		}
 
+		internal classDef addClass(classDef cDef, string name)
+		{
+			cDef = cDef ?? getGlobalCDef();
+			if (cDef.classTable.ContainsKey(name))
+			{ } //error.. Class already exists
+			classDef cDefTemp = new classDef();
+			cDef.classTable.Add(name, cDefTemp);
+			return cDefTemp;
+		}
+
+		internal classDef createInstance(classDef cDef, string name)
+		{
+			cDef = cDef ?? getGlobalCDef();
+			if (!cDef.classTable.ContainsKey(name))
+			{ return null; } //error
+			classDef retVal = new classDef();
+			//don't create new copy for classTable (to prevent static calling)
+			retVal.funcTable = new Dictionary<string, List<functionDef>>(cDef.funcTable);
+			retVal.varTable = new Dictionary<string, variable>(cDef.varTable);
+			return retVal;
+		}
+
 		internal classDef getGlobalCDef()
 		{
 			if (classDepthStack.Count == 0)

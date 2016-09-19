@@ -23,8 +23,8 @@ namespace MOSES
 		{
 			object val = Visit(context.exp());
 			Visit(context.complexVariable());
-			STable.setVariable(cDef, vName, val);
 			Console.WriteLine(vName + " = " + val);
+			STable.setVariable(cDef, vName, val);
 			return val;
 		}
 
