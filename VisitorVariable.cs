@@ -24,6 +24,17 @@ namespace MOSES
 			object val = Visit(context.exp());
 			Visit(context.complexVariable());
 			Console.WriteLine(vName + " = " + val);
+
+			var var = STable.getVariable(cDef, vName)?.value as SymbolTable.classDef;
+			if (var != null)
+			{
+				var.referenceCount--;
+				if (var.referenceCount == 0)
+					invokeDestructor(var);
+			}
+			if (val as SymbolTable.classDef != null)
+				(val as SymbolTable.classDef).referenceCount++;
+
 			STable.setVariable(cDef, vName, val);
 			return val;
 		}

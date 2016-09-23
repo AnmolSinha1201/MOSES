@@ -1,6 +1,10 @@
-zxc = qwe(10)[0]
+zxc = new asd(12)
+zxc = 5
 
-asd(qwe)
+class asd
 {
-	return qwe + 5
+	__delete()
+	{
+		qwe = 10
+	}
 }

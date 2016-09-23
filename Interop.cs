@@ -116,6 +116,8 @@ namespace MOSES
 
         public IContainer invokeFunction(object context, string name, IContainer[] args)
 		{
+			if (args == null)
+				args = new IContainer[0];
 			var cDef = (context as SymbolTable.classDef) ?? STable.getGlobalCDef();
             var function = STable.getFunction(cDef, name, args.Count());
 			if (function == null)
@@ -133,9 +135,7 @@ namespace MOSES
 				return new IContainer() { value = val, vType = getVarTypeImmediate(val) };
 			}
 		}
-
-
-		//clone of VisitorFUnction.prepareParams. Kept separate for performance issues.
+		
 		internal List<SymbolTable.variable> prepareParams(IContainer[] args, SymbolTable.functionDef fDef)
 		{
 			var paramList = new List<SymbolTable.variable>();

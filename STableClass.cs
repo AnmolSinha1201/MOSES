@@ -10,6 +10,8 @@ namespace MOSES
 	{
 		internal class classDef
 		{
+			public bool __new = false, __delete = false;
+			public int referenceCount = 0;	
 			public Dictionary<string, variable> varTable = new Dictionary<string, variable>();
 			public Dictionary<string, List<functionDef>> funcTable = new Dictionary<string, List<functionDef>>();
 			public Dictionary<string, classDef> classTable = new Dictionary<string, classDef>();
@@ -48,8 +50,10 @@ namespace MOSES
 			{ return null; } //error
 			classDef retVal = new classDef();
 			//don't create new copy for classTable (to prevent static calling)
-			retVal.funcTable = new Dictionary<string, List<functionDef>>(cDef.funcTable);
-			retVal.varTable = new Dictionary<string, variable>(cDef.varTable);
+			retVal.funcTable = new Dictionary<string, List<functionDef>>(cDef.classTable[name].funcTable);
+			retVal.varTable = new Dictionary<string, variable>(cDef.classTable[name].varTable);
+			retVal.__new = cDef.classTable[name].__new;
+			retVal.__delete = cDef.classTable[name].__delete;
 			return retVal;
 		}
 

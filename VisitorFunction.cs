@@ -79,6 +79,8 @@ namespace MOSES
 		Interop.IContainer[] ToContainerArgs(List<MosesParser.ExpContext> expContext, List<SymbolTable.functionDef.functionParameter> fParam)
 		{
 			var containerList = new List<Interop.IContainer>();
+			if (fParam == null)
+				return null;
 			for (int i = 0; i < expContext.Count; i++)
 			{
 				vName = null;
