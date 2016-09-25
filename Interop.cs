@@ -42,15 +42,7 @@ namespace MOSES
 
 		public variableType getVarTypeImmediate(object val)
 		{
-			if (val == null)
-				return variableType.NONE;
-			if ((val as Int64?) != null || (val as Int32?) != null)
-				return variableType.INT;
-			if ((val as double?) != null || (val as float?) != null)
-				return variableType.DOUBLE;
-			if ((val as string) != null)
-				return variableType.STRING;
-			return variableType.OBJECT;
+			return Helper.getVarTypeImmediate(val);
 		}
 
 		public delegate object functionDelegate(object context, IContainer[] paramArray);
