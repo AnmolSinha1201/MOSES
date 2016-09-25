@@ -23,7 +23,7 @@ namespace MOSES
             return invokeConstructor(instance, args) ?? instance;
 		}
 
-		internal object invokeConstructor(SymbolTable.classDef cDef, Interop.IContainer[] args)
+		public object invokeConstructor(SymbolTable.classDef cDef, Interop.IContainer[] args)
 		{
 			if (!cDef.__new)
 				return null;
@@ -34,10 +34,54 @@ namespace MOSES
 			return retVal.value;
 		}
 
-		internal void invokeDestructor(SymbolTable.classDef cDef)
+		public void invokeDestructor(SymbolTable.classDef oldValue, SymbolTable.classDef newValue)
 		{
-			if (cDef.__delete)
-				interop.invokeFunction(cDef, "__delete", null);
+			if (oldValue != null)
+			{
+				oldValue.referenceCount--;
+				if (oldValue.referenceCount == 0 && oldValue.__delete)
+					interop.invokeFunction(oldValue, "__delete", null);
+			}
+			if (newValue != null)
+				newValue.referenceCount++;
+		}
+
+		public Interop.IContainer invokeMetaCall(SymbolTable.classDef cDef, string functionName, Interop.IContainer[] args)
+		{
+			var function = STable.getFunction(cDef, "__call", 2);
+			if (function == null)
+				return null;
+			var metaArgs = new Interop.IContainer[]
+			{
+				new Interop.IContainer() {vType = Interop.variableType.STRING, value = functionName },
+				new Interop.IContainer() {vType = Interop.variableType.OBJECT, value = args }
+			};
+			return interop.invokeFunction(cDef, function, metaArgs);
+		}
+
+		public void invokeMetaSet(SymbolTable.classDef cDef, string varName, object value)
+		{
+			var function = STable.getFunction(cDef, "__set", 2);
+			if (function == null)
+				return;
+			var metaArgs = new Interop.IContainer[]
+			{
+				new Interop.IContainer() {vType = Interop.variableType.STRING, value = varName },
+				new Interop.IContainer() {vType = STable.getVarTypeLazy(value), value = value }
+			};
+			interop.invokeFunction(cDef, function, metaArgs);
+		}
+
+		public Interop.IContainer invokeMetaGet(SymbolTable.classDef cDef, string varName)
+		{
+			var function = STable.getFunction(cDef, "__get", 1);
+			if (function == null)
+				return null;
+			var metaArgs = new Interop.IContainer[]
+			{
+				new Interop.IContainer() {vType = Interop.variableType.STRING, value = varName }
+			};
+			return interop.invokeFunction(cDef, function, metaArgs);
 		}
 	}
 }

@@ -16,7 +16,7 @@ namespace MOSES
 		public override object VisitVariableFetch([NotNull] MosesParser.VariableFetchContext context)
 		{
 			Visit(context.complexVariable());
-			return STable.getVariable(cDef, vName)?.value;
+			return invokeMetaGet(cDef ?? STable.getGlobalCDef(), vName)?.value ?? STable.getVariable(cDef, vName)?.value;
 		}
 
 		public override object VisitVarAssign([NotNull] MosesParser.VarAssignContext context)
@@ -25,15 +25,8 @@ namespace MOSES
 			Visit(context.complexVariable());
 			Console.WriteLine(vName + " = " + val);
 
-			var var = STable.getVariable(cDef, vName)?.value as SymbolTable.classDef;
-			if (var != null)
-			{
-				var.referenceCount--;
-				if (var.referenceCount == 0)
-					invokeDestructor(var);
-			}
-			if (val as SymbolTable.classDef != null)
-				(val as SymbolTable.classDef).referenceCount++;
+			invokeDestructor(STable.getVariable(cDef, vName)?.value as SymbolTable.classDef, val as SymbolTable.classDef);
+			invokeMetaSet(cDef ?? STable.getGlobalCDef(), vName, val);
 
 			STable.setVariable(cDef, vName, val);
 			return val;

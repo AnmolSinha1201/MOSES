@@ -1,10 +1,17 @@
 zxc = new asd(12)
-zxc = 5
+qwe = zxc.qwe
 
 class asd
 {
-	__delete()
+	__call(name, param)
 	{
-		qwe = 10
+		name = name
+		qwe = param[0] + 5
+	}
+
+	__get(name)
+	{
+		wqe = 10
+		return 5
 	}
 }

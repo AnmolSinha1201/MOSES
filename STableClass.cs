@@ -10,7 +10,7 @@ namespace MOSES
 	{
 		internal class classDef
 		{
-			public bool __new = false, __delete = false;
+			public bool __new = false, __delete = false, __call = false, __set = false, __get = false;
 			public int referenceCount = 0;	
 			public Dictionary<string, variable> varTable = new Dictionary<string, variable>();
 			public Dictionary<string, List<functionDef>> funcTable = new Dictionary<string, List<functionDef>>();
@@ -54,6 +54,9 @@ namespace MOSES
 			retVal.varTable = new Dictionary<string, variable>(cDef.classTable[name].varTable);
 			retVal.__new = cDef.classTable[name].__new;
 			retVal.__delete = cDef.classTable[name].__delete;
+			retVal.__call = cDef.classTable[name].__call;
+			retVal.__set = cDef.classTable[name].__set;
+			retVal.__get = cDef.classTable[name].__get;
 			return retVal;
 		}
 

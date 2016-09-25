@@ -114,17 +114,26 @@ namespace MOSES
 
 		internal MosesVisitor MVisitor = null;
 
-        public IContainer invokeFunction(object context, string name, IContainer[] args)
+		public IContainer invokeFunction(object context, string name, IContainer[] args)
+		{
+			var cDef = (context as SymbolTable.classDef) ?? STable.getGlobalCDef();
+			var metaVal = MVisitor.invokeMetaCall(cDef, name, args);
+			if (metaVal != null)
+				return metaVal;
+            var function = STable.getFunction(cDef, name, args.Count());
+			return invokeFunction(cDef, function, args);
+		}
+
+		internal IContainer invokeFunction(SymbolTable.classDef cDef, SymbolTable.functionDef function, IContainer[] args)
 		{
 			if (args == null)
 				args = new IContainer[0];
-			var cDef = (context as SymbolTable.classDef) ?? STable.getGlobalCDef();
-            var function = STable.getFunction(cDef, name, args.Count());
+			
 			if (function == null)
 				return null;
 			if (function._delegate != null)
 			{
-				object val = function._delegate(context, args);
+				object val = function._delegate(cDef, args);
 				return new IContainer() { value = val, vType = getVarTypeImmediate(val) };
 			}
 			else

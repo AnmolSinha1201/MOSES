@@ -26,31 +26,18 @@ namespace MOSES
 		{
 			if (cDef == null)
 				cDef = STable.getGlobalCDef();
-			//var funcSig = STable.getFunctionSignature(cDef, context.NAME().ToString());
-			var funcSig = STable.getFunction(cDef, context.NAME().ToString(), context.exp().Count());
-			if (funcSig == null)
-			{ }
+
+			var funcSig = cDef.__call ? STable.fDefVariadicTemplate : STable.getFunction(cDef, context.NAME().ToString(), context.exp().Count());
 
 			List<MosesParser.ExpContext> expList = new List<MosesParser.ExpContext>();
 			for (int i = 0; i < context.exp().Count(); i++)
 				expList.Add(context.exp(i));
 
 			var cDefTemp = cDef;
-			var paramList = interop.prepareParams(ToContainerArgs(expList, funcSig.functionParamterList), funcSig).ToArray();
-			cDef = cDefTemp;
-
-            if (funcSig._delegate != null)
-			{
-				object val = execHDF(paramList, funcSig);
-				cDef = val as SymbolTable.classDef; //for func().something chaining
-				return val;
-			}
-			else
-			{
-				object val = execUDF(paramList, funcSig);
-				cDef = val as SymbolTable.classDef; //for func().something chaining
-				return val;
-			}
+			var paramList = ToContainerArgs(expList, funcSig?.functionParamterList);
+			var val = interop.invokeFunction(cDefTemp, context.NAME().ToString(), paramList).value;
+			cDef = val as SymbolTable.classDef; //for func().something chaining
+			return val;
 		}
 
 		internal object execUDF(Interop.IContainer[] paramList, SymbolTable.functionDef fDef)

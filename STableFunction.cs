@@ -24,6 +24,14 @@ namespace MOSES
 			}
 		}
 
+		internal functionDef fDefVariadicTemplate = new functionDef()
+		{
+			isVariadic = true,
+			minParamCount = 0,
+			functionParamterList = new List<functionDef.functionParameter>()
+			{ new functionDef.functionParameter()},
+		};
+
 
 		//no sorting as sorting overhead would be greater than traversing overhead for a typical script.
 		internal void addFunction(classDef cDef, string funcName, functionDef funcDef)
