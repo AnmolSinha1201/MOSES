@@ -41,7 +41,7 @@ namespace MOSES
 			if (context.var() != null)
 				vName = context.var().NAME().ToString();
 			else //this.?varOrFunction[key]
-				vName = Visit(context.exp()) as string;
+				vName = Visit(context.exp()).ToString();
 			return null;
 		}
 

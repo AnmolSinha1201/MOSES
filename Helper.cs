@@ -34,7 +34,7 @@ namespace MOSES
 				return true;
 			else if (container.vType == Interop.variableType.DOUBLE && (double)container.value != 0)
 				return true;
-			else if (container.vType == Interop.variableType.STRING && !string.IsNullOrEmpty(container.value as string))
+			else if (container.vType == Interop.variableType.STRING && !string.IsNullOrEmpty((string)container.value))
 				return true;
 			else if (container.vType == Interop.variableType.OBJECT)
 				return true;
