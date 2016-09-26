@@ -59,7 +59,7 @@ namespace MOSES
 			if (val == null)
 				return null;
 			char[] delim = Visit(context.exp(1))?.ToString()?.ToCharArray();
-			string[] splitStr = val.Split(delim);
+			string[] splitStr = delim.Count() == 0 ? val.ToCharArray().Select(c => c.ToString()).ToArray() : val.Split(delim);
 			for (int i = 0; i < splitStr.Count(); i++)
 			{
 				STable.setVariable(null, "M_LoopField", splitStr[i]);

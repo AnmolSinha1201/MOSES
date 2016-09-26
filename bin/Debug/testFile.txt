@@ -1,2 +1,6 @@
-loopParse("qweasdezxc", "e")
-	qwe = M_LoopField
+if (0)
+	asd = 1
+else if ("")
+	asd = 2
+else
+	asd = 3

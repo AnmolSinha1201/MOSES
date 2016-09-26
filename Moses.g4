@@ -14,8 +14,12 @@ innerfunctionBlock
     : varAssign 
     | complexFunctionCall
     | loops
-    | 'if' '(' exp ')' segmentBlock ('else' segmentBlock)?
+    | ifElseLadder
     | returnBlock
+    ;
+
+ifElseLadder
+    : 'if' '(' exp ')' segmentBlock ('else' segmentBlock)?
     ;
 
 returnBlock

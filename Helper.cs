@@ -26,8 +26,10 @@ namespace MOSES
 
 		internal static bool isTrue(Interop.IContainer container)
 		{
-			if (container.vType == Interop.variableType.NONE)
+			if (container == null || container.vType == Interop.variableType.NONE)
 				return false;
+			if (container.value is bool)
+				return (bool)container.value;
 			if (container.vType == Interop.variableType.INT && (Int64)container.value != 0)
 				return true;
 			else if (container.vType == Interop.variableType.DOUBLE && (double)container.value != 0)
@@ -50,11 +52,11 @@ namespace MOSES
 			if (val == null)
 				return null;
 			Interop.variableType type;
-			if ((val as Int64?) != null || (val as Int32?) != null)
+			if (val is Int64 || val is Int32)
 				type = Interop.variableType.INT;
-			else if ((val as double?) != null || (val as float?) != null)
+			else if (val is double || val is float)
 				type = Interop.variableType.DOUBLE;
-			else if ((val as string) != null)
+			else if (val is string)
 				type = Interop.variableType.STRING;
 			else
 				type = Interop.variableType.OBJECT;
@@ -64,12 +66,12 @@ namespace MOSES
 
 			long outLong;
 			double outDouble;
-            if (Int64.TryParse(val as string, out outLong))
+            if (Int64.TryParse((string)val, out outLong))
 				return new Interop.IContainer { vType = Interop.variableType.INT, value = outLong };
-			else if (double.TryParse(val as string, out outDouble))
+			else if (double.TryParse((string)val, out outDouble))
 				return new Interop.IContainer { vType = Interop.variableType.DOUBLE, value = outDouble };
 
-			return null;
+			return new Interop.IContainer { vType = Interop.variableType.STRING, value = val };
 		}
 	}
 }

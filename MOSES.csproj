@@ -56,6 +56,7 @@
     <Compile Include="Moses.g4.parser.cs">
       <DependentUpon>Moses.g4</DependentUpon>
     </Compile>
+    <Compile Include="VisitorConditionals.cs" />
     <Compile Include="VisitorFunction.cs" />
     <Compile Include="VisitorLoops.cs" />
     <Compile Include="VisitorObject.cs" />
