@@ -1,2 +1,3 @@
-loop(3)
-break
+asd = 6
+while (asd)
+	asd = asd - 3

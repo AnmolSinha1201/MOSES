@@ -24,20 +24,25 @@ namespace MOSES
 			return sb.ToString();
 		}
 
-		internal static bool isTrue(object value)
+		internal static bool isTrue(Interop.IContainer container)
 		{
-			var container = toVarTypeImmediate(value);
 			if (container.vType == Interop.variableType.NONE)
 				return false;
 			if (container.vType == Interop.variableType.INT && (Int64)container.value != 0)
 				return true;
 			else if (container.vType == Interop.variableType.DOUBLE && (double)container.value != 0)
 				return true;
-			else if (container.vType == Interop.variableType.STRING && !string.IsNullOrEmpty(value as string))
+			else if (container.vType == Interop.variableType.STRING && !string.IsNullOrEmpty(container.value as string))
 				return true;
 			else if (container.vType == Interop.variableType.OBJECT)
 				return true;
 			return false;
+		}
+
+		internal static bool isTrue(object value)
+		{
+			var container = toVarTypeImmediate(value);
+			return isTrue(container);
 		}
 
 		internal static Interop.IContainer toVarTypeImmediate(object val)
