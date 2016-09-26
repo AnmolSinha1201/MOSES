@@ -53,9 +53,14 @@ loop
     : 'loop' '(' exp ')' segmentBlock
     ;
 
+loopParse
+    : 'loopParse' '(' exp ',' exp ')' segmentBlock
+    ;
+
 loops
     : loop
     | whileLoop
+    | loopParse
     ;
 
 varAssign

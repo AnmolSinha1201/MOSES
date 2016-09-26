@@ -419,6 +419,19 @@ public partial class MosesBaseListener : IMosesListener {
 	public virtual void ExitLoop([NotNull] MosesParser.LoopContext context) { }
 
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="MosesParser.loopParse"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterLoopParse([NotNull] MosesParser.LoopParseContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="MosesParser.loopParse"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitLoopParse([NotNull] MosesParser.LoopParseContext context) { }
+
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="MosesParser.loops"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>

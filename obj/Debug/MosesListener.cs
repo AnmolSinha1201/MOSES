@@ -361,6 +361,17 @@ public interface IMosesListener : IParseTreeListener {
 	void ExitLoop([NotNull] MosesParser.LoopContext context);
 
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="MosesParser.loopParse"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterLoopParse([NotNull] MosesParser.LoopParseContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="MosesParser.loopParse"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitLoopParse([NotNull] MosesParser.LoopParseContext context);
+
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="MosesParser.loops"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

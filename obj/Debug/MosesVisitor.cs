@@ -238,6 +238,13 @@ public interface IMosesVisitor<Result> : IParseTreeVisitor<Result> {
 	Result VisitLoop([NotNull] MosesParser.LoopContext context);
 
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="MosesParser.loopParse"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitLoopParse([NotNull] MosesParser.LoopParseContext context);
+
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="MosesParser.loops"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

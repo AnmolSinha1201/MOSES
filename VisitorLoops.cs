@@ -15,6 +15,8 @@ namespace MOSES
 			if (container.vType != Interop.variableType.INT)
 			{ return null; } //error
 			for (int i = 0; i < (Int64)container.value; i++)
+			{
+				STable.setVariable(null, "M_Index", i);
 				foreach (var lBlock in context.segmentBlock().loopBlock())
 				{
 					if (string.Equals(lBlock.GetText(), "break", StringComparison.CurrentCultureIgnoreCase))
@@ -23,6 +25,7 @@ namespace MOSES
 						continue;
 					Visit(lBlock.innerfunctionBlock());
 				}
+			}
 			return null;
 		}
 
@@ -30,13 +33,38 @@ namespace MOSES
 		{
 			Interop.IContainer container;
             bool bContinue;
+			int i = 0;
 			while (true)
 			{
 				container = Helper.toVarTypeImmediate(Visit(context.exp()));
 				bContinue = Helper.isTrue(container.value);
 				if (!bContinue)
 					break;
-                foreach (var lBlock in context.segmentBlock().loopBlock())
+				STable.setVariable(null, "M_Index", i++);
+				foreach (var lBlock in context.segmentBlock().loopBlock())
+				{
+					if (string.Equals(lBlock.GetText(), "break", StringComparison.CurrentCultureIgnoreCase))
+						break;
+					else if (string.Equals(lBlock.GetText(), "continue", StringComparison.CurrentCultureIgnoreCase))
+						continue;
+					Visit(lBlock.innerfunctionBlock());
+				}
+			}
+			return null;
+		}
+
+		public override object VisitLoopParse([NotNull] MosesParser.LoopParseContext context)
+		{
+			string val = Visit(context.exp(0))?.ToString();
+			if (val == null)
+				return null;
+			char[] delim = Visit(context.exp(1))?.ToString()?.ToCharArray();
+			string[] splitStr = val.Split(delim);
+			for (int i = 0; i < splitStr.Count(); i++)
+			{
+				STable.setVariable(null, "M_LoopField", splitStr[i]);
+				STable.setVariable(null, "M_Index", i);
+				foreach (var lBlock in context.segmentBlock().loopBlock())
 				{
 					if (string.Equals(lBlock.GetText(), "break", StringComparison.CurrentCultureIgnoreCase))
 						break;

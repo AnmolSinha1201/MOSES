@@ -1,3 +1,2 @@
-asd = 6
-while (asd)
-	asd = asd - 3
+loopParse("qweasdezxc", "e")
+	qwe = M_LoopField
