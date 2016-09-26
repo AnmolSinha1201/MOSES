@@ -1,17 +1,2 @@
-zxc = new asd(12)
-qwe = zxc.qwe
-
-class asd
-{
-	__call(name, param)
-	{
-		name = name
-		qwe = param[0] + 5
-	}
-
-	__get(name)
-	{
-		wqe = 10
-		return 5
-	}
-}
+loop(3)
+break

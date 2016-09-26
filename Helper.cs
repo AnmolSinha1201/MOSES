@@ -26,31 +26,45 @@ namespace MOSES
 
 		internal static bool isTrue(object value)
 		{
-			var type = getVarTypeImmediate(value);
-			if (type == Interop.variableType.NONE)
+			var container = toVarTypeImmediate(value);
+			if (container.vType == Interop.variableType.NONE)
 				return false;
-			if (type == Interop.variableType.INT && Convert.ToInt64(value) != 0)
+			if (container.vType == Interop.variableType.INT && (Int64)container.value != 0)
 				return true;
-			else if (type == Interop.variableType.DOUBLE && Convert.ToDouble(value) != 0)
+			else if (container.vType == Interop.variableType.DOUBLE && (double)container.value != 0)
 				return true;
-			else if (type == Interop.variableType.STRING && !string.IsNullOrEmpty(value as string))
+			else if (container.vType == Interop.variableType.STRING && !string.IsNullOrEmpty(value as string))
 				return true;
-			else if (type == Interop.variableType.OBJECT)
+			else if (container.vType == Interop.variableType.OBJECT)
 				return true;
 			return false;
 		}
 
-		internal static Interop.variableType getVarTypeImmediate(object val)
+		internal static Interop.IContainer toVarTypeImmediate(object val)
 		{
 			if (val == null)
-				return Interop.variableType.NONE;
+				return null;
+			Interop.variableType type;
 			if ((val as Int64?) != null || (val as Int32?) != null)
-				return Interop.variableType.INT;
-			if ((val as double?) != null || (val as float?) != null)
-				return Interop.variableType.DOUBLE;
-			if ((val as string) != null)
-				return Interop.variableType.STRING;
-			return Interop.variableType.OBJECT;
+				type = Interop.variableType.INT;
+			else if ((val as double?) != null || (val as float?) != null)
+				type = Interop.variableType.DOUBLE;
+			else if ((val as string) != null)
+				type = Interop.variableType.STRING;
+			else
+				type = Interop.variableType.OBJECT;
+
+			if (type == Interop.variableType.INT || type == Interop.variableType.DOUBLE || type == Interop.variableType.OBJECT)
+				return new Interop.IContainer { vType = type, value = val };
+
+			long outLong;
+			double outDouble;
+            if (Int64.TryParse(val as string, out outLong))
+				return new Interop.IContainer { vType = Interop.variableType.INT, value = outLong };
+			else if (double.TryParse(val as string, out outDouble))
+				return new Interop.IContainer { vType = Interop.variableType.DOUBLE, value = outDouble };
+
+			return null;
 		}
 	}
 }

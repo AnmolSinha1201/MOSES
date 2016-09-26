@@ -38,11 +38,17 @@ namespace MOSES
 		{
 			if (cDef == null)
 				cDef = currentClassDef;
-			
+
 			if (funcName == "__new")
 				cDef.__new = true;
 			else if (funcName == "__delete")
 				cDef.__delete = true;
+			else if (funcName == "__call")
+				cDef.__call = true;
+			else if (funcName == "__set")
+				cDef.__set = true;
+			else if (funcName == "__get")
+				cDef.__get = true;
 
 			if (!cDef.funcTable.ContainsKey(funcName))
 				cDef.funcTable.Add(funcName, new List<functionDef>());

@@ -23,28 +23,6 @@ namespace MOSES
 			INT, DOUBLE, STRING, OBJECT, NONE
 		}
 
-		void toImmediateType(IContainer container)
-		{
-			variableType t = getVarTypeImmediate(container);
-			container.vType = t;
-			if (t == variableType.INT)
-				container.value = Convert.ToInt64(container.value);
-			else if (t == variableType.DOUBLE)
-				container.value = Convert.ToDouble(container.value);
-			else if (t == variableType.STRING)
-				container.value = Convert.ToString(container.value);
-		}
-
-		public variableType getVarTypeImmediate(IContainer container)
-		{
-			return getVarTypeImmediate(container.value);
-		}
-
-		public variableType getVarTypeImmediate(object val)
-		{
-			return Helper.getVarTypeImmediate(val);
-		}
-
 		public delegate object functionDelegate(object context, IContainer[] paramArray);
 
 		HDFVisitor collector = new HDFVisitor();
@@ -126,14 +104,14 @@ namespace MOSES
 			if (function._delegate != null)
 			{
 				object val = function._delegate(cDef, args);
-				return new IContainer() { value = val, vType = getVarTypeImmediate(val) };
+				return Helper.toVarTypeImmediate(val);
 			}
 			else
 			{
 				var paramList = prepareParams(args, function).ToArray();
 				MVisitor.cDef = cDef;
 				object val = MVisitor.execUDF(paramList, function);
-				return new IContainer() { value = val, vType = getVarTypeImmediate(val) };
+				return Helper.toVarTypeImmediate(val);
 			}
 		}
 		
