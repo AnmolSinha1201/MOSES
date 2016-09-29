@@ -35,7 +35,7 @@ namespace MOSES
 
 			var cDefTemp = cDef;
 			var paramList = ToContainerArgs(expList, funcSig?.functionParamterList);
-			var val = interop.invokeFunction(cDefTemp, context.NAME().ToString(), paramList).value;
+			var val = interop.invokeFunction(cDefTemp, context.NAME().ToString(), paramList)?.value;
 			cDef = val as SymbolTable.classDef; //for func().something chaining
 			return val;
 		}

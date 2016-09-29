@@ -51,10 +51,15 @@ namespace MOSES
 			var function = STable.getFunction(cDef, "__call", 2);
 			if (function == null)
 				return null;
+
+			var argsObject = new SymbolTable.classDef();
+			for (int i = 0; i < args.Count(); i++)
+				argsObject.varTable.Add(i.ToString(), (SymbolTable.variable)args[i]);
+
 			var metaArgs = new Interop.IContainer[]
 			{
 				new Interop.IContainer() {vType = Interop.variableType.STRING, value = functionName },
-				new Interop.IContainer() {vType = Interop.variableType.OBJECT, value = args }
+				new Interop.IContainer() {vType = Interop.variableType.OBJECT, value = argsObject }
 			};
 			return interop.invokeFunction(cDef, function, metaArgs);
 		}

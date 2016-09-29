@@ -58,10 +58,12 @@ namespace MOSES
 				type = Interop.variableType.DOUBLE;
 			else if (val is string)
 				type = Interop.variableType.STRING;
+			else if (val is bool)
+				type = Interop.variableType.BOOL;
 			else
 				type = Interop.variableType.OBJECT;
 
-			if (type == Interop.variableType.INT || type == Interop.variableType.DOUBLE || type == Interop.variableType.OBJECT)
+			if (type == Interop.variableType.INT || type == Interop.variableType.DOUBLE || type == Interop.variableType.BOOL || type == Interop.variableType.OBJECT)
 				return new Interop.IContainer { vType = type, value = val };
 
 			long outLong;
@@ -72,6 +74,16 @@ namespace MOSES
 				return new Interop.IContainer { vType = Interop.variableType.DOUBLE, value = outDouble };
 
 			return new Interop.IContainer { vType = Interop.variableType.STRING, value = val };
+		}
+
+		internal static Interop.IContainer toIntDouble(object val)
+		{
+			var container = Helper.toVarTypeImmediate(val);
+			if (container == null || container.vType == Interop.variableType.NONE)
+				return null;
+			if (container.vType != Interop.variableType.INT && container.vType != Interop.variableType.DOUBLE)
+				return null; //error
+			return container;
 		}
 	}
 }

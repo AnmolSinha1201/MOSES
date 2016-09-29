@@ -113,6 +113,14 @@ public interface IMosesVisitor<Result> : IParseTreeVisitor<Result> {
 	Result VisitExpOpPow([NotNull] MosesParser.ExpOpPowContext context);
 
 	/// <summary>
+	/// Visit a parse tree produced by the <c>unaryIncrDecr</c>
+	/// labeled alternative in <see cref="MosesParser.exp"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitUnaryIncrDecr([NotNull] MosesParser.UnaryIncrDecrContext context);
+
+	/// <summary>
 	/// Visit a parse tree produced by the <c>newClassObject</c>
 	/// labeled alternative in <see cref="MosesParser.exp"/>.
 	/// </summary>
@@ -180,6 +188,13 @@ public interface IMosesVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitInnerfunctionBlock([NotNull] MosesParser.InnerfunctionBlockContext context);
+
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="MosesParser.tryCatchFinally"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitTryCatchFinally([NotNull] MosesParser.TryCatchFinallyContext context);
 
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="MosesParser.ifElseLadder"/>.
@@ -385,11 +400,46 @@ public interface IMosesVisitor<Result> : IParseTreeVisitor<Result> {
 	Result VisitExp([NotNull] MosesParser.ExpContext context);
 
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="MosesParser.unaryOp"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitUnaryOp([NotNull] MosesParser.UnaryOpContext context);
+
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="MosesParser.constExp"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitConstExp([NotNull] MosesParser.ConstExpContext context);
+
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="MosesParser.prePostIncrDecr"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPrePostIncrDecr([NotNull] MosesParser.PrePostIncrDecrContext context);
+
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="MosesParser.preIncrDecr"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPreIncrDecr([NotNull] MosesParser.PreIncrDecrContext context);
+
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="MosesParser.postIncrDecr"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPostIncrDecr([NotNull] MosesParser.PostIncrDecrContext context);
+
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="MosesParser.incrDecr"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitIncrDecr([NotNull] MosesParser.IncrDecrContext context);
 
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="MosesParser.operatorOr"/>.

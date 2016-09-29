@@ -20,7 +20,7 @@ namespace MOSES
 
 		public enum variableType
 		{
-			INT, DOUBLE, STRING, OBJECT, NONE
+			INT, DOUBLE, STRING, OBJECT, BOOL, NONE
 		}
 
 		public delegate object functionDelegate(object context, IContainer[] paramArray);

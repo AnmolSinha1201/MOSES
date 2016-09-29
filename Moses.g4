@@ -16,6 +16,12 @@ innerfunctionBlock
     | loops
     | ifElseLadder
     | returnBlock
+    | prePostIncrDecr
+    | tryCatchFinally
+    ;
+
+tryCatchFinally
+    : 'try' segmentBlock ('catch' segmentBlock ('finally' segmentBlock)?)?
     ;
 
 ifElseLadder
@@ -150,7 +156,8 @@ exp
     | complexFunctionCall                       #functionFetch
     | newInstance			                    #newClassObject
     | varAssign                                 #variableAssign
-    | operatorUnary variableOrFunction          #unaryVar
+    | unaryOp                                   #unaryVar
+    | prePostIncrDecr                           #unaryIncrDecr
     | <assoc=right> exp operatorPower exp       #expOpPow
     | exp operatorMulDivMod exp                 #expMulDivMod
     | exp operatorAddSub exp                    #expAddSub
@@ -161,9 +168,32 @@ exp
     | exp operatorOr exp                        #expOR
     ;
 
+unaryOp
+    : operatorUnary complexVariable
+    | operatorUnary NUMBER
+    ;
+
 constExp
     : NUMBER                                    #number
     | STRING                                    #string
+    ;
+
+prePostIncrDecr
+    : preIncrDecr
+    | postIncrDecr
+    ;
+
+preIncrDecr
+    : incrDecr complexVariable
+    ; 
+
+postIncrDecr
+    : complexVariable incrDecr
+    ;
+
+incrDecr
+    : '++'
+    | '--'
     ;
 
 operatorOr 
@@ -176,7 +206,7 @@ operatorComparison
     : '<' | '>' | '<=' | '>=' | '!=' | '==';
 
 operatorPower
-    : '^'
+    : '**'
     ;
 
 operatorUnary
@@ -193,7 +223,7 @@ operatorMulDivMod
     : '*' | '/' | '%' | '//';
 
 operatorBitwise
-    : '&' | '|' | '~' | '<<' | '>>';
+    : '&' | '|' | '^' | '<<' | '>>';
 
 
 

@@ -162,6 +162,19 @@ public interface IMosesListener : IParseTreeListener {
 	void ExitExpOpPow([NotNull] MosesParser.ExpOpPowContext context);
 
 	/// <summary>
+	/// Enter a parse tree produced by the <c>unaryIncrDecr</c>
+	/// labeled alternative in <see cref="MosesParser.exp"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterUnaryIncrDecr([NotNull] MosesParser.UnaryIncrDecrContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>unaryIncrDecr</c>
+	/// labeled alternative in <see cref="MosesParser.exp"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitUnaryIncrDecr([NotNull] MosesParser.UnaryIncrDecrContext context);
+
+	/// <summary>
 	/// Enter a parse tree produced by the <c>newClassObject</c>
 	/// labeled alternative in <see cref="MosesParser.exp"/>.
 	/// </summary>
@@ -271,6 +284,17 @@ public interface IMosesListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitInnerfunctionBlock([NotNull] MosesParser.InnerfunctionBlockContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="MosesParser.tryCatchFinally"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterTryCatchFinally([NotNull] MosesParser.TryCatchFinallyContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="MosesParser.tryCatchFinally"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitTryCatchFinally([NotNull] MosesParser.TryCatchFinallyContext context);
 
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="MosesParser.ifElseLadder"/>.
@@ -592,6 +616,17 @@ public interface IMosesListener : IParseTreeListener {
 	void ExitExp([NotNull] MosesParser.ExpContext context);
 
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="MosesParser.unaryOp"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterUnaryOp([NotNull] MosesParser.UnaryOpContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="MosesParser.unaryOp"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitUnaryOp([NotNull] MosesParser.UnaryOpContext context);
+
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="MosesParser.constExp"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -601,6 +636,50 @@ public interface IMosesListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitConstExp([NotNull] MosesParser.ConstExpContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="MosesParser.prePostIncrDecr"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterPrePostIncrDecr([NotNull] MosesParser.PrePostIncrDecrContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="MosesParser.prePostIncrDecr"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitPrePostIncrDecr([NotNull] MosesParser.PrePostIncrDecrContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="MosesParser.preIncrDecr"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterPreIncrDecr([NotNull] MosesParser.PreIncrDecrContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="MosesParser.preIncrDecr"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitPreIncrDecr([NotNull] MosesParser.PreIncrDecrContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="MosesParser.postIncrDecr"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterPostIncrDecr([NotNull] MosesParser.PostIncrDecrContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="MosesParser.postIncrDecr"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitPostIncrDecr([NotNull] MosesParser.PostIncrDecrContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="MosesParser.incrDecr"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterIncrDecr([NotNull] MosesParser.IncrDecrContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="MosesParser.incrDecr"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitIncrDecr([NotNull] MosesParser.IncrDecrContext context);
 
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="MosesParser.operatorOr"/>.

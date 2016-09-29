@@ -13,7 +13,7 @@ namespace MOSES
 		{
 			if (Helper.isTrue(Visit(context.exp())))
 				Visit(context.segmentBlock(0));
-			else
+			else if (context.segmentBlock().Count() == 2)
 				Visit(context.segmentBlock(1));
 
 			return null;
