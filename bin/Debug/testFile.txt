@@ -1,8 +1,0 @@
-asd = 1
-myFunc(asd)
-asd = asd + 1
-
-myFunc(ref qwe)
-{
-	qwe = qwe + 10
-}

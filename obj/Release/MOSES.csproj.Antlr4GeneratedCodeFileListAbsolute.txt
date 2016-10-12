@@ -1,6 +1,0 @@
-C:\Users\Nick\Documents\Visual Studio 2015\Projects\MOSES\obj\Release\MosesLexer.cs
-C:\Users\Nick\Documents\Visual Studio 2015\Projects\MOSES\obj\Release\MosesParser.cs
-C:\Users\Nick\Documents\Visual Studio 2015\Projects\MOSES\obj\Release\MosesListener.cs
-C:\Users\Nick\Documents\Visual Studio 2015\Projects\MOSES\obj\Release\MosesBaseListener.cs
-C:\Users\Nick\Documents\Visual Studio 2015\Projects\MOSES\obj\Release\MosesVisitor.cs
-C:\Users\Nick\Documents\Visual Studio 2015\Projects\MOSES\obj\Release\MosesBaseVisitor.cs

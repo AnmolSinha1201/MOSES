@@ -34,6 +34,7 @@ Roadmap
 
 |Milestone|Status|
 |---------|------|
+|Case-insensitivity
 |Interface redisign for multiple runtimes
 |Unified types for memory and performance optimization
 |.NET type casting instead of type assumption implementaion
