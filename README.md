@@ -19,6 +19,7 @@ Current Features
 * Static class/instance differentiation
 * Automated GC
 * No variable types while scripting
+* Case insensitive
 * Strict variable types while using in host
 * Meta Functions (new, delete, call, set, get) for classes
 * Host has complete access to script
@@ -34,22 +35,17 @@ Roadmap
 
 |Milestone|Status|
 |---------|------|
-|Case-insensitivity
-|Interface redisign for multiple runtimes
-|Unified types for memory and performance optimization
-|.NET type casting instead of type assumption implementaion
-|Built-in function support for variable dereferencing
-|native windows application support by DllExport
-|Cross package support for script-host-native(win) compatibility
-|Cross platform support for script-host system
-|Memory optimization for extra objects being created (CDef)
-|Debugging by Line/Column count
-|Option for changing default stream for error report and output
-|Allow expression coalascing and chaining
-|Allow expressions in parenthesis to be coalasced and chained
-|Resolution of arrays and variadics
-|Smarter objects for arrays, dictionaries and object rather than generic objects
-|Error throwing/stdout at required places.
-|Disallow '_' and 'this' as variable names.
-|CoreCLR implementation.
-|Easier syntax changing by generating code on the fly.
+|Case-insensitivity|Completed
+|Interface redisign for multiple runtimes|Pending
+|native windows application support by DllExport|Pending
+|Cross platform support for script-host system|Pending\*
+|Debugging by Line/Column count|Pending
+|Option for changing default stream for error report and output|Pending
+|Allow expression coalascing and chaining|Pending
+|Allow expressions in parenthesis to be coalasced and chained|Pending
+|Smarter objects for arrays, dictionaries and object rather than generic objects|Pending\*
+|Error throwing/stdout at required places|Pending
+|Disallow '_' and 'this' as variable names|Pending
+|CoreCLR implementation.|Pending*
+|Easier syntax changing by generating code on the fly.|Pending\*
+\* = To be implemented with CoreCLR implementation
