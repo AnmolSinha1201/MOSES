@@ -12,9 +12,9 @@ namespace MOSES
 		{
 			public bool __new = false, __delete = false, __call = false, __set = false, __get = false;
 			public int referenceCount = 0;	
-			public Dictionary<string, variable> varTable = new Dictionary<string, variable>();
-			public Dictionary<string, List<functionDef>> funcTable = new Dictionary<string, List<functionDef>>();
-			public Dictionary<string, classDef> classTable = new Dictionary<string, classDef>();
+			public Dictionary<string, variable> varTable = new Dictionary<string, variable>(StringComparer.InvariantCultureIgnoreCase);
+			public Dictionary<string, List<functionDef>> funcTable = new Dictionary<string, List<functionDef>>(StringComparer.InvariantCultureIgnoreCase);
+			public Dictionary<string, classDef> classTable = new Dictionary<string, classDef>(StringComparer.InvariantCultureIgnoreCase);
 		}
 
 		classDef currentClassDef = new classDef(); //global scope
@@ -50,8 +50,8 @@ namespace MOSES
 			{ return null; } //error
 			classDef retVal = new classDef();
 			//don't create new copy for classTable (to prevent static calling)
-			retVal.funcTable = new Dictionary<string, List<functionDef>>(cDef.classTable[name].funcTable);
-			retVal.varTable = new Dictionary<string, variable>(cDef.classTable[name].varTable);
+			retVal.funcTable = new Dictionary<string, List<functionDef>>(cDef.classTable[name].funcTable, StringComparer.InvariantCultureIgnoreCase);
+			retVal.varTable = new Dictionary<string, variable>(cDef.classTable[name].varTable, StringComparer.InvariantCultureIgnoreCase);
 			retVal.__new = cDef.classTable[name].__new;
 			retVal.__delete = cDef.classTable[name].__delete;
 			retVal.__call = cDef.classTable[name].__call;

@@ -90,7 +90,7 @@ namespace MOSES
 
 		Dictionary<string, SymbolTable.variable> addNameToParams(List<SymbolTable.functionDef.functionParameter> fDef, Interop.IContainer[] args)
 		{
-			return fDef.Select((x, i) => new { key = x.name, val = args[i] as SymbolTable.variable }).ToDictionary(e => e.key, e => e.val);
+			return fDef.Select((x, i) => new { key = x.name, val = args[i] as SymbolTable.variable }).ToDictionary(e => e.key, e => e.val, StringComparer.InvariantCultureIgnoreCase);
 		}
 		
 	}
