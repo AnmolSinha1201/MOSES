@@ -44,7 +44,7 @@ Roadmap
 |Cross platform support for script-host system|Pending\*
 |Debugging by Line/Column count|Pending
 |Option for changing default stream for error report and output|Pending
-|Allow expressions in parenthesis to be coalasced and chained|Pending
+|Allow expressions in parenthesis to be coalasced and chained|Completed
 |Smarter objects for arrays, dictionaries and object rather than generic objects|Pending\*
 |Error throwing/stdout at required places|Pending
 |Disallow '_' and 'this' as variable names|Pending

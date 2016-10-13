@@ -80,5 +80,10 @@ namespace MOSES
 				return retVal;
 			}
 		}
+
+		public override object VisitExpPriority([NotNull] MosesParser.ExpPriorityContext context)
+		{
+			return Visit(context.exp());
+		}
 	}
 }
