@@ -43,7 +43,6 @@ REF : R E F;
 THIS : T H I S;
 NEW : N E W;
 
-
 chunk
     : block* EOF
     ;
@@ -92,7 +91,7 @@ localConstVarAssign
     ;
 
 classDecl
-    : CLASS NAME '{' classBlock* '}'
+    : CONTINUE NAME '{' classBlock* '}'
     ;
 
 functionDecl
@@ -191,18 +190,20 @@ functionCall
     ;
 
 newInstance
-	: NEW complexVariable '(' exp? (',' exp)* ')' 
-	;
+    : NEW complexVariable '(' exp? (',' exp)* ')' 
+    ;
 
 exp
     : constExp                                  #constantExp
     | complexVariable                           #variableFetch
     | complexFunctionCall                       #functionFetch
-    | newInstance			                    #newClassObject
+    | newInstance                               #newClassObject
     | varAssign                                 #variableAssign
     | unaryOp                                   #unaryVar
     | prePostIncrDecr                           #unaryIncrDecr
     | <assoc=right> exp operatorPower exp       #expOpPow
+    | exp '?' exp ':' exp                       #expTernary
+	| exp '??' exp								#expNullCoalesce
     | exp operatorMulDivMod exp                 #expMulDivMod
     | exp operatorAddSub exp                    #expAddSub
     | exp ' . ' exp                             #expConcat
@@ -210,6 +211,7 @@ exp
     | exp operatorBitwise exp                   #expBitwise
     | exp operatorAnd exp                       #expAND
     | exp operatorOr exp                        #expOR
+	| '(' exp ')'								#expPriority
     ;
 
 unaryOp

@@ -36,12 +36,14 @@ Roadmap
 |Milestone|Status|
 |---------|------|
 |Case-insensitivity|Completed
+|different equality operators(+=, *= etc)|Pending
+|ternary operators|Completed
+|null coalescing operators|Completed
 |Interface redisign for multiple runtimes|Pending
 |native windows application support by DllExport|Pending
 |Cross platform support for script-host system|Pending\*
 |Debugging by Line/Column count|Pending
 |Option for changing default stream for error report and output|Pending
-|Allow expression coalascing and chaining|Pending
 |Allow expressions in parenthesis to be coalasced and chained|Pending
 |Smarter objects for arrays, dictionaries and object rather than generic objects|Pending\*
 |Error throwing/stdout at required places|Pending

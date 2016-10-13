@@ -18,5 +18,20 @@ namespace MOSES
 
 			return null;
 		}
+
+		public override object VisitExpTernary([NotNull] MosesParser.ExpTernaryContext context)
+		{
+			if (Helper.isTrue(Visit(context.exp(0))))
+				return Visit(context.exp(1));
+			return Visit(context.exp(2));
+		}
+
+		public override object VisitExpNullCoalesce([NotNull] MosesParser.ExpNullCoalesceContext context)
+		{
+			var val = Visit(context.exp(0));
+			if (Helper.isTrue(val))
+				return val;
+			return Visit(context.exp(1));
+		}
 	}
 }
