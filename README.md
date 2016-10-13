@@ -28,7 +28,7 @@ Current Features
 
 Requirements
 -------------------
-* .NET framework 4.6
+* .NET framework 4.5
 
 Roadmap
 --------------
@@ -37,6 +37,11 @@ Roadmap
 |---------|------|
 |Case-insensitivity|Completed
 |different equality operators(+=, *= etc)|Pending
+|comments (inline/block)|Pending
+|file inclusion|Pending
+|context-free-functions|Pending
+|Allow scoping of classes by static names (class.class.varOrFunction)|Pending
+|Remove '//' operator in favor of comments|Pending
 |ternary operators|Completed
 |null coalescing operators|Completed
 |Interface redisign for multiple runtimes|Completed
@@ -51,3 +56,7 @@ Roadmap
 |CoreCLR implementation.|Pending*
 |Easier syntax changing by generating code on the fly.|Pending\*
 \* = To be implemented with CoreCLR implementation
+
+Documentaion
+--------------
+Under construction.
