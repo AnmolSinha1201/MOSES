@@ -91,7 +91,7 @@ localConstVarAssign
     ;
 
 classDecl
-    : CONTINUE NAME '{' classBlock* '}'
+    : CLASS NAME '{' classBlock* '}'
     ;
 
 functionDecl
