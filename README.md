@@ -39,7 +39,7 @@ Roadmap
 |different equality operators(+=, *= etc)|Pending
 |ternary operators|Completed
 |null coalescing operators|Completed
-|Interface redisign for multiple runtimes|Pending
+|Interface redisign for multiple runtimes|Completed
 |native windows application support by DllExport|Pending
 |Cross platform support for script-host system|Pending\*
 |Debugging by Line/Column count|Pending

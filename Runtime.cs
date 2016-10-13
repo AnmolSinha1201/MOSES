@@ -13,15 +13,11 @@ namespace MOSES
 	{
 		public Runtime() : this("testFile.txt")
 		{}
-		
-		object testFunc(object instance, Interop.IContainer[] args)
-		{
-			object o = interop.newClassDef(null, "qwe");
-			interop.setVariable(o, 0, args[0].value);
-			return o;
-		}
 
 		public Interop interop = new Interop();
+		SymbolTable STable = new SymbolTable();
+		MosesVisitor visitor = new MosesVisitor();
+		IParseTree tree = null;
 		public Runtime(string fileName)
 		{
 			var reader = File.OpenText(fileName);
@@ -30,22 +26,23 @@ namespace MOSES
 			CommonTokenStream tokens = new CommonTokenStream(lexer);
 
 			var parser = new MosesParser(tokens);
-			IParseTree tree = parser.chunk();
+			tree = parser.chunk();
 			Console.WriteLine(tree.ToStringTree(parser));
-
-			SymbolTable STable = new SymbolTable();
-			var visitor = new MosesVisitor();
-			interop.STable = STable;
-			interop.MVisitor = visitor;
-			interop.registerFunction(null, new Interop.functionDelegate(testFunc), "qwe(var){}");
 
 			var collector = new CollectorVisitor();
 			collector.STable = STable;
 			collector.Visit(tree);
-			
+
+			interop.STable = STable;
+			interop.MVisitor = visitor;
 			visitor.STable = STable;
 			visitor.interop = interop;
-			Console.WriteLine(visitor.Visit(tree));
+		}
+
+		//seperate execution to allow host to add its own functions
+		public void execute()
+		{
+			visitor.Visit(tree);
 		}
 	}
 }
