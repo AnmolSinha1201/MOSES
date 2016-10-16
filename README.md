@@ -47,7 +47,7 @@ Roadmap
 |Interface redisign for multiple runtimes|Completed
 |native windows application support by DllExport|Pending
 |Cross platform support for script-host system|Pending\*
-|Debugging by Line/Column count|Pending
+|Better debugging options (Line/Column pos)|Pending
 |Option for changing default stream for error report and output|Pending
 |Allow expressions in parenthesis to be coalasced and chained|Completed
 |Smarter objects for arrays, dictionaries and object rather than generic objects|Pending\*
