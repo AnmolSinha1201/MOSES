@@ -182,6 +182,7 @@ var = new NAME()
 //var2 = var.someFunction() will produce error, since NESTED is not in the scope of instance variable var.
 //var2 = NAME.someFunction() will work, since NAME is considered static in this context.
 //var2 = new NAME.NESTED() will work, since NAME is considered static in this context.
+// ONLY static classes can access inner class.
 
 class NAME
 {
@@ -204,12 +205,15 @@ Meta-Functions
 __new(param1)
 {
 	//acts as constructor to the class.
+	//returning nothing returns the instance of an object. Returning some non-null value prevents object creation.
+	// this makes the class a static-only, i.e. no instance of that class can be created.
 }
 ```
 ```
 __delete()
 {
 	//acts as destruuctor to the class.
+	//It can return some value, which will be assigned to its LValue.
 }
 ```
 ```
@@ -218,6 +222,7 @@ __call(functionName, param)
 {
 	// functionName contains name of the function called.
     // param[index] contains parameters.
+    // return works like a regular function.
 }
 ```
 ```
@@ -226,13 +231,15 @@ __set(varName, value)
 {
 	//varName contains name of the variable.
     //value contains the value.
+    //if some value is returned, it is assigned to its Placeholder.
 }
 ```
 ```
 //invoked when object.var is queried
-__new(varName)
+__get(varName)
 {
 	//varName contains name of the variable.
+	//returned value is assigned to its placeholder. If nothing is returned, placeholder/LValue becomes null/empty.
 }
 ```
 

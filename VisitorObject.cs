@@ -34,16 +34,18 @@ namespace MOSES
 			return retVal?.value;
 		}
 
-		public void invokeDestructor(SymbolTable.classDef oldValue, SymbolTable.classDef newValue)
+		public Interop.IContainer invokeDestructor(SymbolTable.classDef oldValue, SymbolTable.classDef newValue)
 		{
+			Interop.IContainer retVal = null;
 			if (oldValue != null)
 			{
 				oldValue.referenceCount--;
 				if (oldValue.referenceCount == 0 && oldValue.__delete)
-					interop.invokeFunction(oldValue, "__delete", null);
+					retVal = interop.invokeFunction(oldValue, "__delete", null);
 			}
 			if (newValue != null)
 				newValue.referenceCount++;
+			return retVal;
 		}
 
 		public Interop.IContainer invokeMetaCall(SymbolTable.classDef cDef, string functionName, Interop.IContainer[] args)
@@ -64,17 +66,17 @@ namespace MOSES
 			return interop.invokeFunction(cDef, function, metaArgs);
 		}
 
-		public void invokeMetaSet(SymbolTable.classDef cDef, string varName, object value)
+		public Interop.IContainer invokeMetaSet(SymbolTable.classDef cDef, string varName, object value)
 		{
 			var function = STable.getFunction(cDef, "__set", 2);
 			if (function == null)
-				return;
+				return null;
 			var metaArgs = new Interop.IContainer[]
 			{
 				new Interop.IContainer() {vType = Interop.variableType.STRING, value = varName },
 				new Interop.IContainer() {vType = STable.getVarTypeLazy(value), value = value }
 			};
-			interop.invokeFunction(cDef, function, metaArgs);
+			return interop.invokeFunction(cDef, function, metaArgs);
 		}
 
 		public Interop.IContainer invokeMetaGet(SymbolTable.classDef cDef, string varName)
