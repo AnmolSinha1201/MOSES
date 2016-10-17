@@ -31,7 +31,7 @@ namespace MOSES
 			if ((args?.Count() ?? 0) == 0 && function == null)
 				return null;
 			var retVal = interop.invokeFunction(cDef, "__new", args);
-			return retVal.value;
+			return retVal?.value;
 		}
 
 		public void invokeDestructor(SymbolTable.classDef oldValue, SymbolTable.classDef newValue)

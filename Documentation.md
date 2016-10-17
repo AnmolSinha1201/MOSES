@@ -176,6 +176,28 @@ variable = new className()
 ```
 class variables can __ONLY__ be constants, i.e. no expression evaluated at runtime can be assigned. However, there is no limitation on variables used inside the function. All the rules applied to regular functions apply to class member functions as well.
 
+Static Classes:
+```
+var = new NAME()
+//var2 = var.someFunction() will produce error, since NESTED is not in the scope of instance variable var.
+//var2 = NAME.someFunction() will work, since NAME is considered static in this context.
+//var2 = new NAME.NESTED() will work, since NAME is considered static in this context.
+
+class NAME
+{
+    someFunction()
+    {
+    	//code block
+        return new this.NESTED()
+    }
+    
+    class NESTED
+    {
+    	//code block
+    }
+}
+```
+
 Meta-Functions
 -------------
 ```

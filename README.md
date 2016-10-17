@@ -40,7 +40,7 @@ Roadmap
 |comments (inline/block)|Pending
 |file inclusion|Pending
 |context-free-functions|Pending
-|Allow scoping of classes by static names (class.class.varOrFunction)|Pending
+|Allow scoping of classes by static names (class.class.varOrFunction)|Completed
 |Remove '//' operator in favor of comments|Pending
 |ternary operators|Completed
 |null coalescing operators|Completed
