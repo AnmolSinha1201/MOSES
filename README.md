@@ -37,11 +37,11 @@ Roadmap
 |---------|------|
 |Case-insensitivity|Completed
 |different equality operators(+=, *= etc)|Pending
-|comments (inline/block)|Pending
+|comments (inline/block)|Completed
 |file inclusion|Pending
 |context-free-functions|Pending
 |Allow scoping of classes by static names (class.class.varOrFunction)|Completed
-|Remove '//' operator in favor of comments|Pending
+|Remove '//' operator in favor of comments|Completed
 |ternary operators|Completed
 |null coalescing operators|Completed
 |Interface redisign for multiple runtimes|Completed

@@ -266,7 +266,7 @@ operatorAddSub
     : '+' | '-';
 
 operatorMulDivMod
-    : '*' | '/' | '%' | '//';
+    : '*' | '/' | '%';
 
 operatorBitwise
     : '&' | '|' | '^' | '<<' | '>>';
@@ -308,3 +308,11 @@ WS
 NL
     : [\r\n]+ -> skip
     ;
+
+BLOCK_COMMENT
+    : '/*' .*? '*/' -> skip
+;
+
+LINE_COMMENT
+    : '//' ~[\r\n]* -> skip
+;

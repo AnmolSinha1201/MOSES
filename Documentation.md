@@ -243,6 +243,14 @@ __get(varName)
 }
 ```
 
+Comments
+-------------
+```
+//line comment
+/*
+block comment
+*/
+```
 
 Try-Catch-Finally
 -------------

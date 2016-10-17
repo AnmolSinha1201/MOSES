@@ -35,17 +35,11 @@ namespace MOSES
 					return Convert.ToDouble(container1.value) / Convert.ToDouble(container2.value);
 				return (Int64)container1.value / (Int64)container2.value;
 			}
-			else if (op == "%")
+			else //if (op == "%")
 			{
 				if (container1.vType == Interop.variableType.DOUBLE || container2.vType == Interop.variableType.DOUBLE)
 					return Convert.ToDouble(container1.value) % Convert.ToDouble(container2.value);
 				return (Int64)container1.value % (Int64)container2.value;
-			}
-			else
-			{
-				if (container1.vType == Interop.variableType.DOUBLE || container2.vType == Interop.variableType.DOUBLE)
-					return (Int64)(Convert.ToDouble(container1.value) / Convert.ToDouble(container2.value));
-				return (Int64)container1.value / (Int64)container2.value;
 			}
 		}
 
