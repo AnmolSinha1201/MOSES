@@ -13,8 +13,6 @@ namespace MOSES
 		{
 			string fileName = Visit(context.exp()).ToString();
 			var runtime = new Runtime(fileName, STable);
-			if (runtime == null)
-			{ } //already included
 			runtime.execute();
 			return base.VisitIncludeBlock(context);
 		}
