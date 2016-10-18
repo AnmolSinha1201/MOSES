@@ -42,6 +42,7 @@ LOOPPARSE : L O O P P A R S E;
 REF : R E F;
 THIS : T H I S;
 NEW : N E W;
+INCLUDE : I N C L U D E;
 
 chunk
     : block* EOF
@@ -51,6 +52,7 @@ block
     : innerfunctionBlock 
     | functionDecl
     | classDecl
+	| includeBlock
     ;
 
 innerfunctionBlock
@@ -62,6 +64,10 @@ innerfunctionBlock
     | prePostIncrDecr
     | tryCatchFinally
     ;
+
+includeBlock
+	: INCLUDE '(' exp ')'
+	;
 
 tryCatchFinally
     : TRY segmentBlock (CATCH segmentBlock (FINALLY segmentBlock)?)?

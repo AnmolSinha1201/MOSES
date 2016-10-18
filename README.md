@@ -38,7 +38,7 @@ Roadmap
 |Case-insensitivity|Completed
 |different equality operators(+=, *= etc)|Pending
 |comments (inline/block)|Completed
-|file inclusion|Pending
+|file inclusion|Completed
 |context-free-functions|Pending
 |Allow scoping of classes by static names (class.class.varOrFunction)|Completed
 |Remove '//' operator in favor of comments|Completed
@@ -55,6 +55,7 @@ Roadmap
 |Disallow '_' and 'this' as variable names|Pending
 |CoreCLR implementation.|Pending*
 |Easier syntax changing by generating code on the fly.|Pending\*
+|Implement escape sequences|Pending
 \* = To be implemented with CoreCLR implementation
 
 Documentaion

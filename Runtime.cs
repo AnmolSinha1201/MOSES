@@ -15,19 +15,22 @@ namespace MOSES
 		{}
 
 		public Interop interop = new Interop();
-		SymbolTable STable = new SymbolTable();
 		MosesVisitor visitor = new MosesVisitor();
 		IParseTree tree = null;
-		public Runtime(string fileName)
+		public Runtime(string fileName) : this(fileName, new SymbolTable())
+		{}
+
+		internal Runtime(string fileName, SymbolTable STable)
 		{
 			var reader = File.OpenText(fileName);
 			var input = new AntlrInputStream(reader);
+			reader.Close();
 			var lexer = new MosesLexer(input);
 			CommonTokenStream tokens = new CommonTokenStream(lexer);
 
 			var parser = new MosesParser(tokens);
 			tree = parser.chunk();
-			Console.WriteLine(tree.ToStringTree(parser));
+			//Console.WriteLine(tree.ToStringTree(parser));
 
 			var collector = new CollectorVisitor();
 			collector.STable = STable;
