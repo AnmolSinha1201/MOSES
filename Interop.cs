@@ -12,6 +12,7 @@ namespace MOSES
 	public class Interop
 	{
 		internal SymbolTable STable = null;
+		internal ErrorHandler EHandler = null;
 		public class IContainer
 		{
 			public object value;
@@ -39,6 +40,7 @@ namespace MOSES
 			collector.STable = STable;
 			collector.cDef = cDef;
 			collector.funcDel = del;
+			collector.EHandler = EHandler;
 			collector.Visit(tree);
 		}
 
@@ -87,10 +89,13 @@ namespace MOSES
 		public IContainer invokeFunction(object context, string name, IContainer[] args)
 		{
 			var cDef = (context as SymbolTable.classDef) ?? STable.getGlobalCDef();
-			var metaVal = MVisitor.invokeMetaCall(cDef, name, args);
-			if (metaVal != null)
-				return metaVal;
+
+			if ((context as SymbolTable.classDef).__call)
+				return MVisitor.invokeMetaCall(cDef, name, args);
+
             var function = STable.getFunction(cDef, name, args.Count());
+			if (function == null)
+				EHandler.throwHostError(ErrorHandler.FunctionNotExist + name);
 			return invokeFunction(cDef, function, args);
 		}
 
@@ -148,10 +153,20 @@ namespace MOSES
 		{ return STable.addClass(context as SymbolTable.classDef, name); }
 
 		public object getClassDef(object context, string name)
-		{ return STable.getCDefFromCDef(context as SymbolTable.classDef, name); }
+		{
+			var retVal = STable.getCDefFromCDef(context as SymbolTable.classDef, name);
+			if (retVal == null)
+				EHandler.throwHostError(ErrorHandler.ClassNotExist + name);
+			return retVal;
+		}
 
 		public object createInstance(object context, string name)
-		{ return STable.createInstance(context as SymbolTable.classDef, name); }
+		{
+			var retVal = STable.createInstance(context as SymbolTable.classDef, name);
+			if (retVal == null)
+				EHandler.throwHostError(ErrorHandler.ClassNotExist + name);
+			return retVal;
+		}
 	}
 
 
@@ -160,6 +175,7 @@ namespace MOSES
 		internal SymbolTable.classDef cDef = null;
 		internal SymbolTable STable = null;
 		internal Interop.functionDelegate funcDel = null;
+		internal ErrorHandler EHandler = null;
 
 		public override object VisitFunctionDef([NotNull] MosesParser.FunctionDefContext context)
 		{
@@ -208,8 +224,9 @@ namespace MOSES
 				minParamCount = contextPList == null ? 0 : contextPList.functionParameterNoDefault().Count()
 			};
 			
-			STable.addFunction(cDef, context.NAME().ToString(), function);
-			return false;
+			if(!STable.addFunction(cDef, context.NAME().ToString(), function))
+				EHandler.throwHostError(ErrorHandler.FunctionExists + context.NAME());
+			return null;
 		}
 	}
 }

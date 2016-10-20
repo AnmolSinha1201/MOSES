@@ -12,7 +12,7 @@ namespace MOSES
 		public override object VisitIncludeBlock([NotNull] MosesParser.IncludeBlockContext context)
 		{
 			string fileName = Visit(context.exp()).ToString();
-			var runtime = new Runtime(fileName, STable);
+			var runtime = new Runtime(fileName, STable, EHandler);
 			runtime.execute();
 			return base.VisitIncludeBlock(context);
 		}

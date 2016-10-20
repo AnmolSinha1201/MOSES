@@ -34,20 +34,20 @@ namespace MOSES
 
 
 		//no sorting as sorting overhead would be greater than traversing overhead for a typical script.
-		internal void addFunction(classDef cDef, string funcName, functionDef funcDef)
+		internal bool addFunction(classDef cDef, string funcName, functionDef funcDef)
 		{
 			if (cDef == null)
 				cDef = currentClassDef;
 
 			if (funcName == "__new")
 				cDef.__new = true;
-			else if (funcName == "__delete")
+			else if (funcName == "__delete" && funcDef.minParamCount == 2 && funcDef.functionParamterList.Count == 2)
 				cDef.__delete = true;
-			else if (funcName == "__call")
+			else if (funcName == "__call" && funcDef.minParamCount == 2 && funcDef.functionParamterList.Count == 2)
 				cDef.__call = true;
-			else if (funcName == "__set")
+			else if (funcName == "__set" && funcDef.minParamCount == 2 && funcDef.functionParamterList.Count == 2)
 				cDef.__set = true;
-			else if (funcName == "__get")
+			else if (funcName == "__get" && funcDef.minParamCount == 1 && funcDef.functionParamterList.Count == 1)
 				cDef.__get = true;
 
 			if (!cDef.funcTable.ContainsKey(funcName))
@@ -57,8 +57,9 @@ namespace MOSES
 				if (fDef.minParamCount == funcDef.minParamCount &&
 					fDef.functionParamterList.Count == funcDef.functionParamterList.Count &&
 					fDef.isVariadic == funcDef.isVariadic)
-					Helper.errorReport("function signature already exists");
+					return false;
 			cDef.funcTable[funcName].Add(funcDef);
+			return true;
 		}
 
 		internal functionDef getFunction(classDef cDef, string funcName, int paramCount)

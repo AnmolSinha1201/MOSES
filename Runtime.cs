@@ -17,10 +17,10 @@ namespace MOSES
 		public Interop interop = new Interop();
 		MosesVisitor visitor = new MosesVisitor();
 		IParseTree tree = null;
-		public Runtime(string fileName) : this(fileName, new SymbolTable())
+		public Runtime(string fileName) : this(fileName, new SymbolTable(), new ErrorHandler())
 		{}
 
-		internal Runtime(string fileName, SymbolTable STable)
+		internal Runtime(string fileName, SymbolTable STable, ErrorHandler EHandler)
 		{
 			var reader = File.OpenText(fileName);
 			var input = new AntlrInputStream(reader);
@@ -32,14 +32,19 @@ namespace MOSES
 			tree = parser.chunk();
 			//Console.WriteLine(tree.ToStringTree(parser));
 
+			if (STable.EHandler == null)
+				STable.EHandler = EHandler;
 			var collector = new CollectorVisitor();
 			collector.STable = STable;
+			collector.EHandler = EHandler;
 			collector.Visit(tree);
 
 			interop.STable = STable;
 			interop.MVisitor = visitor;
+			interop.EHandler = EHandler;
 			visitor.STable = STable;
 			visitor.interop = interop;
+			visitor.EHandler = EHandler;
 		}
 
 		//seperate execution to allow host to add its own functions

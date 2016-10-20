@@ -13,24 +13,27 @@ namespace MOSES
 		{
 			Visit(context.complexVariable());
 			var instance = STable.createInstance(cDef, vName);
+			if (instance == null)
+				EHandler.throwScriptError($"({context.Start.Line},{context.Start.Column})", context.Parent.GetText(), ErrorHandler.ClassNotExist + vName);
+
+			if (!instance.__new)
+				return instance;
 
 			List<MosesParser.ExpContext> expList = new List<MosesParser.ExpContext>();
 			for (int i = 0; i < context.exp().Count(); i++)
 				expList.Add(context.exp(i));
-			
-			var function = STable.getFunction(instance, "__new", expList.Count());
-			var args = ToContainerArgs(expList, function?.functionParamterList);
-            return invokeConstructor(instance, args) ?? instance;
+			return invokeConstructor(instance, expList);
 		}
 
-		public object invokeConstructor(SymbolTable.classDef cDef, Interop.IContainer[] args)
+		public object invokeConstructor(SymbolTable.classDef cDef, List<MosesParser.ExpContext> expList)
 		{
-			if (!cDef.__new)
+			var function = STable.getFunction(cDef, "__new", expList.Count());
+			if (function == null && expList.Count == 0) //to allow default constructor
 				return null;
-			var function = STable.getFunction(cDef, "__new", (args?.Count() ?? 0));
-			if ((args?.Count() ?? 0) == 0 && function == null)
-				return null;
-			var retVal = interop.invokeFunction(cDef, "__new", args);
+			if (function == null)
+				EHandler.throwScriptError(null, null, ErrorHandler.FunctionNotExist + $"__new({expList.Count})");
+			var args = ToContainerArgs(expList, function?.functionParamterList);
+			var retVal = interop.invokeFunction(cDef, function, args);
 			return retVal?.value;
 		}
 
@@ -41,7 +44,10 @@ namespace MOSES
 			{
 				oldValue.referenceCount--;
 				if (oldValue.referenceCount == 0 && oldValue.__delete)
-					retVal = interop.invokeFunction(oldValue, "__delete", null);
+				{
+					var function = STable.getFunction(cDef, "__delete", 2);
+					retVal = interop.invokeFunction(oldValue, function, null);
+				}
 			}
 			if (newValue != null)
 				newValue.referenceCount++;
@@ -51,8 +57,6 @@ namespace MOSES
 		public Interop.IContainer invokeMetaCall(SymbolTable.classDef cDef, string functionName, Interop.IContainer[] args)
 		{
 			var function = STable.getFunction(cDef, "__call", 2);
-			if (function == null)
-				return null;
 
 			var argsObject = new SymbolTable.classDef();
 			for (int i = 0; i < args.Count(); i++)
@@ -69,8 +73,7 @@ namespace MOSES
 		public Interop.IContainer invokeMetaSet(SymbolTable.classDef cDef, string varName, object value)
 		{
 			var function = STable.getFunction(cDef, "__set", 2);
-			if (function == null)
-				return null;
+
 			var metaArgs = new Interop.IContainer[]
 			{
 				new Interop.IContainer() {vType = Interop.variableType.STRING, value = varName },
@@ -82,8 +85,7 @@ namespace MOSES
 		public Interop.IContainer invokeMetaGet(SymbolTable.classDef cDef, string varName)
 		{
 			var function = STable.getFunction(cDef, "__get", 1);
-			if (function == null)
-				return null;
+
 			var metaArgs = new Interop.IContainer[]
 			{
 				new Interop.IContainer() {vType = Interop.variableType.STRING, value = varName }

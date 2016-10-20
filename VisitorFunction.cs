@@ -28,6 +28,9 @@ namespace MOSES
 				cDef = STable.getGlobalCDef();
 
 			var funcSig = cDef.__call ? STable.fDefVariadicTemplate : STable.getFunction(cDef, context.NAME().ToString(), context.exp().Count());
+			if (funcSig == null)
+				EHandler.throwScriptError($"({context.Start.Line},{context.Start.Column})",
+					context.Parent.GetText(), ErrorHandler.FunctionNotExist + context.NAME());
 
 			List<MosesParser.ExpContext> expList = new List<MosesParser.ExpContext>();
 			for (int i = 0; i < context.exp().Count(); i++)

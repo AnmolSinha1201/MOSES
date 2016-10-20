@@ -11,10 +11,17 @@ namespace MOSES
 	{
 		bool bSkip = true; //to prevent collecting variables outside classes
 		internal SymbolTable STable = null;
+		internal ErrorHandler EHandler = null;
+
 		public override object VisitClassDecl([NotNull] MosesParser.ClassDeclContext context)
 		{
 			bSkip = false;
-			STable.newClassDef(context.NAME().ToString());
+			if (!STable.newClassDef(context.NAME().ToString()))
+			{
+				EHandler.throwScriptError($"({context.Start.Line},{context.Start.Column})", 
+					$"class {context.NAME()}{{}}", 
+					ErrorHandler.ClassExists + context.NAME());
+			}
 			foreach (MosesParser.ClassBlockContext cbc in context.classBlock())
 				Visit(cbc);
 			STable.restoreClassDef();
@@ -68,9 +75,13 @@ namespace MOSES
 				isVariadic = isVariadic,
 				minParamCount = contextPList == null ? 0 : contextPList.functionParameterNoDefault().Count()
 			};
-			
-			STable.addFunction(null, context.functionDef().NAME().ToString(), function);
-			return false;
+
+			//Console.WriteLine(STable.addFunction(null, context.functionDef().NAME().ToString(), function) == true);
+			if (!STable.addFunction(null, context.functionDef().NAME().ToString(), function))
+				EHandler.throwScriptError($"({context.Start.Line},{context.Start.Column})", 
+					$"{context.functionDef().NAME()}({context.functionDef().functionParameterList().GetText()}){{}}", 
+					ErrorHandler.FunctionExists + context.functionDef().NAME());
+			return null;
 		}
 
 		public override object VisitString([NotNull] MosesParser.StringContext context)

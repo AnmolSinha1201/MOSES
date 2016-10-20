@@ -12,6 +12,7 @@ namespace MOSES
 		internal SymbolTable.classDef cDef = null;
 		string vName = null;
 		internal SymbolTable STable = null;
+		internal ErrorHandler EHandler = null;
 
 		public override object VisitVariableFetch([NotNull] MosesParser.VariableFetchContext context)
 		{
@@ -66,12 +67,8 @@ namespace MOSES
 				cDef = STable.getGlobalCDef();
 			else
 				cDef = STable.getCDefFromCDef(cDef, context.NAME().ToString());
-
 			if (cDef == null) //no variable or class found
-			{
-				//var position = context.Start;
-				//Helper.throwError(Helper.errorCode.nonExistentClass, context.Parent.GetText(), position.Line, position.Column);
-			}
+				EHandler.throwScriptError($"({context.Start.Line},{context.Start.Column})", context.Parent.GetText(), ErrorHandler.ClassNotExist + context.NAME().ToString());
 			return null;
 		}
 

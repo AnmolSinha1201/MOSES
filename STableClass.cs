@@ -8,6 +8,7 @@ namespace MOSES
 {
 	partial class SymbolTable
 	{
+		internal ErrorHandler EHandler = null;
 		internal class classDef
 		{
 			public bool __new = false, __delete = false, __call = false, __set = false, __get = false;
@@ -20,12 +21,15 @@ namespace MOSES
 		classDef currentClassDef = new classDef(); //global scope
 		static Stack<classDef> classDepthStack = new Stack<classDef>();
 
-		internal void newClassDef(string name)
+		internal bool newClassDef(string name)
 		{
+			if (currentClassDef.classTable.ContainsKey(name))
+			{ return false; }
 			var classDefTemp = new classDef();
 			currentClassDef.classTable.Add(name, classDefTemp);
 			classDepthStack.Push(currentClassDef);
 			currentClassDef = classDefTemp;
+			return true;
 		}
 
 		internal void restoreClassDef()
@@ -37,7 +41,7 @@ namespace MOSES
 		{
 			cDef = cDef ?? getGlobalCDef();
 			if (cDef.classTable.ContainsKey(name))
-			{ } //error.. Class already exists
+			{ EHandler.throwHostError(ErrorHandler.ClassExists + name); } //error.. Class already exists
 			classDef cDefTemp = new classDef();
 			cDef.classTable.Add(name, cDefTemp);
 			return cDefTemp;
