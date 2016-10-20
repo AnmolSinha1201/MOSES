@@ -58,7 +58,7 @@
     </Compile>
     <Compile Include="VisitorBinaryOperations.cs" />
     <Compile Include="VisitorConditionals.cs" />
-    <Compile Include="VisitorError.cs" />
+    <Compile Include="ErrorHandler.cs" />
     <Compile Include="VisitorFunction.cs" />
     <Compile Include="VisitorInclude.cs" />
     <Compile Include="VisitorLoops.cs" />

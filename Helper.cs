@@ -8,11 +8,6 @@ namespace MOSES
 {
 	class Helper
 	{
-		internal static void errorReport(string s)
-		{
-			Console.WriteLine(s);
-		}
-
 		internal static string decorateString(string value)
 		{
 			StringBuilder sb = new StringBuilder(value);
