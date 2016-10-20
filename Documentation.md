@@ -202,6 +202,7 @@ class NAME
 Meta-Functions
 -------------
 Any meta function (except __new) which does not match the default signature is considered as a regular function, and will not be recognized if it is called.
+
 Default signatures :
 - __new : any parameters
 - __delete : no parameter
