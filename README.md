@@ -47,11 +47,11 @@ Roadmap
 |Interface redisign for multiple runtimes|Completed
 |native windows application support by DllExport|Pending
 |Cross platform support for script-host system|Pending\*
-|Better debugging options (Line/Column pos)|Pending
-|Option for changing default stream for error report and output|Pending
+|Better debugging options (Line/Column pos)|Completed
+|Option for changing default stream for error report and output|Completed
 |Allow expressions in parenthesis to be coalasced and chained|Completed
 |Smarter objects for arrays, dictionaries and object rather than generic objects|Pending\*
-|Error throwing/stdout at required places|Pending
+|Error throwing/stdout at required places|Completed
 |Disallow '_' and 'this' as variable names|Pending
 |CoreCLR implementation.|Pending*
 |Easier syntax changing by generating code on the fly.|Pending\*

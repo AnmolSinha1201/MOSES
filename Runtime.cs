@@ -17,6 +17,19 @@ namespace MOSES
 		public Interop interop = new Interop();
 		MosesVisitor visitor = new MosesVisitor();
 		IParseTree tree = null;
+		ErrorHandler EHandler = null;
+		public bool supressWarning
+		{
+			get { return EHandler.supressWarning; }
+			set { EHandler.supressWarning = value; }
+		}
+		public bool scriptErrorAsStdErr
+		{
+			get { return EHandler.scriptErrorAsStdErr; }
+			set { EHandler.scriptErrorAsStdErr = value; }
+		}
+
+
 		public Runtime(string fileName) : this(fileName, new SymbolTable(), new ErrorHandler())
 		{}
 
@@ -45,6 +58,7 @@ namespace MOSES
 			visitor.STable = STable;
 			visitor.interop = interop;
 			visitor.EHandler = EHandler;
+			this.EHandler = EHandler;
 		}
 
 		//seperate execution to allow host to add its own functions

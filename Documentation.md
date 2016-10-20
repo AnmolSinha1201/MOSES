@@ -201,7 +201,16 @@ class NAME
 
 Meta-Functions
 -------------
+Any meta function (except __new) which does not match the default signature is considered as a regular function, and will not be recognized if it is called.
+Default signatures :
+- __new : any parameters
+- __delete : no parameter
+- __call : 2 parameters
+- __set : 2 parameters
+- __get : 1 parameter
+Parameters can be of any type (variadic, default valued, regular).
 ```
+// A default constructor will be called if caller is passing no parameter (new class()), and class itslef is not overriding it.
 __new(param1)
 {
 	//acts as constructor to the class.

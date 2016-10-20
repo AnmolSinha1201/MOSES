@@ -39,15 +39,15 @@ namespace MOSES
 			if (cDef == null)
 				cDef = currentClassDef;
 
-			if (funcName == "__new")
+			if (funcName.Equals("__new", StringComparison.OrdinalIgnoreCase))
 				cDef.__new = true;
-			else if (funcName == "__delete" && funcDef.minParamCount == 2 && funcDef.functionParamterList.Count == 2)
+			else if (funcName.Equals("__delete", StringComparison.OrdinalIgnoreCase) && funcDef.minParamCount == 0 && funcDef.functionParamterList.Count == 0)
 				cDef.__delete = true;
-			else if (funcName == "__call" && funcDef.minParamCount == 2 && funcDef.functionParamterList.Count == 2)
+			else if (funcName.Equals("__call", StringComparison.OrdinalIgnoreCase) && funcDef.minParamCount == 2 && funcDef.functionParamterList.Count == 2)
 				cDef.__call = true;
-			else if (funcName == "__set" && funcDef.minParamCount == 2 && funcDef.functionParamterList.Count == 2)
+			else if (funcName.Equals("__set", StringComparison.OrdinalIgnoreCase) && funcDef.minParamCount == 2 && funcDef.functionParamterList.Count == 2)
 				cDef.__set = true;
-			else if (funcName == "__get" && funcDef.minParamCount == 1 && funcDef.functionParamterList.Count == 1)
+			else if (funcName.Equals("__get", StringComparison.OrdinalIgnoreCase) && funcDef.minParamCount == 1 && funcDef.functionParamterList.Count == 1)
 				cDef.__get = true;
 
 			if (!cDef.funcTable.ContainsKey(funcName))
