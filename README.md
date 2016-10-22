@@ -39,7 +39,7 @@ Roadmap
 |different equality operators(+=, *= etc)|Pending
 |comments (inline/block)|Completed
 |file inclusion|Completed
-|context-free-functions|Pending
+|context-free-functions|Canceled.
 |Allow scoping of classes by static names (class.class.varOrFunction)|Completed
 |Remove '//' operator in favor of comments|Completed
 |ternary operators|Completed
