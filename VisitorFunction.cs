@@ -29,7 +29,7 @@ namespace MOSES
 
 			var funcSig = cDef.__call ? STable.fDefVariadicTemplate : STable.getFunction(cDef, context.NAME().ToString(), context.exp().Count());
 			if (funcSig == null)
-				EHandler.throwScriptError($"({context.Start.Line},{context.Start.Column})",
+				EHandler.throwScriptError(context.Start.Line, context.Start.Column,
 					context.Parent.GetText(), ErrorHandler.FunctionNotExist + context.NAME());
 
 			List<MosesParser.ExpContext> expList = new List<MosesParser.ExpContext>();

@@ -29,12 +29,20 @@ namespace MOSES
 			set { EHandler.scriptErrorAsStdErr = value; }
 		}
 
+		public bool debugParser
+		{
+			get { return EHandler.debugParser; }
+			set { EHandler.debugParser = value; }
+		}
 
 		public Runtime(string fileName) : this(fileName, new SymbolTable(), new ErrorHandler())
 		{}
 
 		internal Runtime(string fileName, SymbolTable STable, ErrorHandler EHandler)
 		{
+			this.EHandler = EHandler;
+			EHandler.parseError = false;
+
 			var reader = File.OpenText(fileName);
 			var input = new AntlrInputStream(reader);
 			reader.Close();
@@ -42,8 +50,12 @@ namespace MOSES
 			CommonTokenStream tokens = new CommonTokenStream(lexer);
 
 			var parser = new MosesParser(tokens);
+			parser.RemoveErrorListeners();
+			parser.AddErrorListener(EHandler);
 			tree = parser.chunk();
 			//Console.WriteLine(tree.ToStringTree(parser));
+			if (EHandler.parseError)
+				EHandler.throwParseError();
 
 			if (STable.EHandler == null)
 				STable.EHandler = EHandler;
@@ -58,7 +70,6 @@ namespace MOSES
 			visitor.STable = STable;
 			visitor.interop = interop;
 			visitor.EHandler = EHandler;
-			this.EHandler = EHandler;
 		}
 
 		//seperate execution to allow host to add its own functions

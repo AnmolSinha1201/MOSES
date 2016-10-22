@@ -68,7 +68,7 @@ namespace MOSES
 			else
 				cDef = STable.getCDefFromCDef(cDef, context.NAME().ToString());
 			if (cDef == null) //no variable or class found
-				EHandler.throwScriptError($"({context.Start.Line},{context.Start.Column})", context.Parent.GetText(), ErrorHandler.ClassNotExist + context.NAME().ToString());
+				EHandler.throwScriptError(context.Start.Line, context.Start.Column, context.Parent.GetText(), ErrorHandler.ClassNotExist + context.NAME().ToString());
 			return null;
 		}
 

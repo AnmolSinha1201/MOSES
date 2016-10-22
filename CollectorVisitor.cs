@@ -18,7 +18,7 @@ namespace MOSES
 			bSkip = false;
 			if (!STable.newClassDef(context.NAME().ToString()))
 			{
-				EHandler.throwScriptError($"({context.Start.Line},{context.Start.Column})", 
+				EHandler.throwScriptError(context.Start.Line,context.Start.Column, 
 					$"class {context.NAME()}{{}}", 
 					ErrorHandler.ClassExists + context.NAME());
 			}
@@ -78,7 +78,7 @@ namespace MOSES
 
 			//Console.WriteLine(STable.addFunction(null, context.functionDef().NAME().ToString(), function) == true);
 			if (!STable.addFunction(null, context.functionDef().NAME().ToString(), function))
-				EHandler.throwScriptError($"({context.Start.Line},{context.Start.Column})", 
+				EHandler.throwScriptError(context.Start.Line, context.Start.Column, 
 					$"{context.functionDef().NAME()}({context.functionDef().functionParameterList().GetText()}){{}}", 
 					ErrorHandler.FunctionExists + context.functionDef().NAME());
 			return null;

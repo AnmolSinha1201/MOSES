@@ -275,7 +275,7 @@ block comment
 
 Including files
 -------------
-MOSES includes are dynamic, i.e. they are included during runtime. While this does give flexibility, one must be sure to include files at correct position. Since files are included at runtime, all the constructs and code are processed at that position. This means if the included file contains some construct like class or value, the parent file will not see it unless its been already processed.
+MOSES includes are dynamic, i.e. they are included during runtime. While this does give flexibility, one must be sure to include files at correct position. Since files are included at runtime, all the constructs and code are processed at that position. This means if the included file contains some construct like class or value, the parent file will not see it unless its been already processed. If there is parse error, an exception is thrown which is processed by host.
 ```
 include(expression_containing_file_name) //can be variable or a string or a function etc.
 ```

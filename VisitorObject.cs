@@ -14,7 +14,7 @@ namespace MOSES
 			Visit(context.complexVariable());
 			var instance = STable.createInstance(cDef, vName);
 			if (instance == null)
-				EHandler.throwScriptError($"({context.Start.Line},{context.Start.Column})", context.Parent.GetText(), ErrorHandler.ClassNotExist + vName);
+				EHandler.throwScriptError(context.Start.Line, context.Start.Column, context.Parent.GetText(), ErrorHandler.ClassNotExist + vName);
 
 			if (!instance.__new)
 				return instance;
@@ -31,7 +31,7 @@ namespace MOSES
 			if (function == null && expList.Count == 0) //to allow default constructor
 				return null;
 			if (function == null)
-				EHandler.throwScriptError(null, null, ErrorHandler.FunctionNotExist + $"__new({expList.Count})");
+				EHandler.throwScriptError(0, 0, null, ErrorHandler.FunctionNotExist + $"__new({expList.Count})");
 			var args = ToContainerArgs(expList, function?.functionParamterList);
 			var retVal = interop.invokeFunction(cDef, function, args);
 			return retVal?.value;
