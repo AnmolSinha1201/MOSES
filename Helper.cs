@@ -16,6 +16,13 @@ namespace MOSES
 				sb.Remove(0, 1);
 				sb.Length--;
 			}
+
+			sb.Replace("\\\"", "\"");
+			sb.Replace("\\n", "\n");
+			sb.Replace("\\t", "\t");
+			sb.Replace("\\r", "\r");
+			sb.Replace("\\v", "\v");
+			sb.Replace("\\\\", "\\");
 			return sb.ToString();
 		}
 

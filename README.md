@@ -55,7 +55,7 @@ Roadmap
 |Disallow '_' and 'this' as variable names|Pending
 |CoreCLR implementation.|Pending*
 |Easier syntax changing by generating code on the fly.|Pending\*
-|Implement escape sequences|Pending
+|Implement escape sequences|Completed
 \* = To be implemented with CoreCLR implementation
 
 Documentaion

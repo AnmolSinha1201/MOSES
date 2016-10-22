@@ -17,6 +17,17 @@ var[key] = value //only valid if var is an object.
 var.key = value //equivalent to above
 ```
 
+Escape Characters
+----------------
+```
+\" - Quotes
+\r - Carraige Return
+\n - Line Feed
+\t - Horizontal Tab
+\v - Vertical Tab
+\\ - Escaped Backslash
+```
+
 Unary Operators
 -------------
 ```
