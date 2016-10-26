@@ -19,8 +19,8 @@ namespace MOSES
 			Visit(context.complexVariable());
 			return invokeMetaGet(cDef ?? STable.getGlobalCDef(), vName)?.value ?? STable.getVariable(cDef, vName)?.value;
 		}
-
-		public override object VisitVarAssign([NotNull] MosesParser.VarAssignContext context)
+		
+		public override object VisitNormalVarAssign([NotNull] MosesParser.NormalVarAssignContext context)
 		{
 			object val = Visit(context.exp());
 			Visit(context.complexVariable());

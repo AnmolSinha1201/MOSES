@@ -123,8 +123,11 @@ loops
     ;
 
 varAssign
-    : complexVariable '=' exp
-    ;
+    : complexVariable '=' exp												#normalVarAssign
+	| complexVariable op=('+=' | '-=' | '*=' | '/=' | '%=' | '**=') exp		#mathVarAssign
+	| complexVariable op='.=' exp											#concatVarAssign
+	| complexVariable op=('|=' | '&=' | '^=' | '>>=' | '<<=') exp			#bitwiseVarAssign
+	;
 
 functionDef
     : NAME '(' functionParameterList? ')'

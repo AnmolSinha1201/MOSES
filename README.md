@@ -36,10 +36,9 @@ Roadmap
 |Milestone|Status|
 |---------|------|
 |Case-insensitivity|Completed
-|different equality operators(+=, *= etc)|Pending
+|different equality operators(+=, *= etc)|Completed
 |comments (inline/block)|Completed
 |file inclusion|Completed
-|context-free-functions|Canceled.
 |Allow scoping of classes by static names (class.class.varOrFunction)|Completed
 |Remove '//' operator in favor of comments|Completed
 |ternary operators|Completed

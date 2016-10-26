@@ -17,6 +17,10 @@ var[key] = value //only valid if var is an object.
 var.key = value //equivalent to above
 ```
 
+```
+//also supported +=, -=, *=, /=, %=, **=, .=, |=, &=, ^=, >>=, <<=
+```
+
 Escape Characters
 ----------------
 ```
