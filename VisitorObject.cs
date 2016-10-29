@@ -50,7 +50,7 @@ namespace MOSES
 				EHandler.throwScriptError(0, 0, null, ErrorHandler.FunctionNotExist + $"__new({expList.Count})");
 			var args = ToContainerArgs(expList, function?.functionParamterList);
 			var retVal = interop.invokeFunction(cDef, function, args);
-			return retVal?.value;
+			return retVal?.value?? cDef;
 		}
 
 		public Interop.IContainer invokeDestructor(SymbolTable.classDef oldValue, SymbolTable.classDef newValue)
