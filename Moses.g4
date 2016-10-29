@@ -52,7 +52,7 @@ block
     : innerfunctionBlock 
     | functionDecl
     | classDecl
-	| includeBlock
+    | includeBlock
     ;
 
 innerfunctionBlock
@@ -66,8 +66,8 @@ innerfunctionBlock
     ;
 
 includeBlock
-	: INCLUDE '(' exp ')'
-	;
+    : INCLUDE '(' exp ')'
+    ;
 
 tryCatchFinally
     : TRY segmentBlock (CATCH segmentBlock (FINALLY segmentBlock)?)?
@@ -123,11 +123,11 @@ loops
     ;
 
 varAssign
-    : complexVariable '=' exp												#normalVarAssign
-	| complexVariable op=('+=' | '-=' | '*=' | '/=' | '%=' | '**=') exp		#mathVarAssign
-	| complexVariable op='.=' exp											#concatVarAssign
-	| complexVariable op=('|=' | '&=' | '^=' | '>>=' | '<<=') exp			#bitwiseVarAssign
-	;
+    : complexVariable '=' exp                                               #normalVarAssign
+    | complexVariable op=('+=' | '-=' | '*=' | '/=' | '%=' | '**=') exp     #mathVarAssign
+    | complexVariable op='.=' exp                                           #concatVarAssign
+    | complexVariable op=('|=' | '&=' | '^=' | '>>=' | '<<=') exp           #bitwiseVarAssign
+    ;
 
 functionDef
     : NAME '(' functionParameterList? ')'
@@ -202,17 +202,27 @@ newInstance
     : NEW complexVariable '(' exp? (',' exp)* ')' 
     ;
 
+newArray
+    : '[' (exp? | exp (',' exp)+) ']'
+    ;
+
+newDictionary
+    : '{' ((exp ':' exp)? | exp ':' exp (',' exp ':' exp)+) '}'
+    ;
+
 exp
     : constExp                                  #constantExp
     | complexVariable                           #variableFetch
     | complexFunctionCall                       #functionFetch
     | newInstance                               #newClassObject
+    | newArray                                  #newArrayObject
+    | newDictionary                             #newDictionaryObject
     | varAssign                                 #variableAssign
     | unaryOp                                   #unaryVar
     | prePostIncrDecr                           #unaryIncrDecr
     | <assoc=right> exp operatorPower exp       #expOpPow
     | exp '?' exp ':' exp                       #expTernary
-	| exp '??' exp								#expNullCoalesce
+    | exp '??' exp                              #expNullCoalesce
     | exp operatorMulDivMod exp                 #expMulDivMod
     | exp operatorAddSub exp                    #expAddSub
     | exp ' . ' exp                             #expConcat
@@ -220,7 +230,7 @@ exp
     | exp operatorBitwise exp                   #expBitwise
     | exp operatorAnd exp                       #expAND
     | exp operatorOr exp                        #expOR
-	| '(' exp ')'								#expPriority
+    | '(' exp ')'                               #expPriority
     ;
 
 unaryOp

@@ -25,6 +25,22 @@ namespace MOSES
 			return invokeConstructor(instance, expList);
 		}
 
+		public override object VisitNewArray([NotNull] MosesParser.NewArrayContext context)
+		{
+			var retVal = new SymbolTable.classDef();
+			for (int i = 0; i < context.exp().Count(); i ++)
+				STable.setVariable(retVal, i.ToString(), Visit(context.exp(i)));
+			return retVal;
+		}
+
+		public override object VisitNewDictionary([NotNull] MosesParser.NewDictionaryContext context)
+		{
+			var retVal = new SymbolTable.classDef();
+			for (int i = 0; i < context.exp().Count(); i += 2)
+				STable.setVariable(retVal, Visit(context.exp(i))?.ToString(), Visit(context.exp(i + 1)));
+			return retVal;
+		}
+
 		public object invokeConstructor(SymbolTable.classDef cDef, List<MosesParser.ExpContext> expList)
 		{
 			var function = STable.getFunction(cDef, "__new", expList.Count());

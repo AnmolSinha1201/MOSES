@@ -15,6 +15,8 @@ namespace MOSES
 		{
 			if (cDef == null)
 				cDef = currentClassDef;
+			if (varName == null)
+				return;
 			if (cDef.varTable.Keys.Contains(varName)) //avoid creating new variable for ref to work
 			{
 				var var = cDef.varTable[varName];
