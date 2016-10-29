@@ -16,6 +16,7 @@ var = new className(params)
 var[key] = value //only valid if var is an object.
 var.key = value //equivalent to above
 ```
+global variables can be accessed using ```_```, and instance variables can be accessed using ```this```
 
 ```
 //also supported +=, -=, *=, /=, %=, **=, .=, |=, &=, ^=, >>=, <<=
