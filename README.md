@@ -59,6 +59,5 @@ Roadmap
 
 Documentaion
 --------------
-[Script Link](Documentation.md)
-
-Host Link(Under construction)
+* [Script Link](ScriptingDocumentation.md)
+* [Host Link](HostingDocumentation.md)

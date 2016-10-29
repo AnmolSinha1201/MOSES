@@ -1,6 +1,6 @@
-Documentation
+Scripting Documentation
 -----------
-Document contains common syntax for script side and host for MOSES.
+Document contains common syntax for script side for MOSES.
 
 Variable assign
 -------------
