@@ -167,6 +167,19 @@ namespace MOSES
 				EHandler.throwHostError(ErrorHandler.ClassNotExist + name);
 			return retVal;
 		}
+
+		public object createInstance(object context, string name, IContainer[] args)
+		{
+			var retVal = (SymbolTable.classDef)createInstance(context, name);
+			if (!retVal.__new)
+				EHandler.throwHostError(ErrorHandler.FunctionNotExist + "Default Constructor");
+
+			var function = STable.getFunction(retVal, name, args.Count());
+			if (function == null)
+				EHandler.throwHostError(ErrorHandler.FunctionNotExist + $"__new({args.Count()})");
+			var value = invokeFunction((SymbolTable.classDef)context, function, args);
+			return value.value ?? retVal;
+		}
 	}
 
 
