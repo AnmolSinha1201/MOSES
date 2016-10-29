@@ -214,6 +214,23 @@ class NAME
 }
 ```
 
+Arrays and dictionaries
+-------------
+Arrays :
+```
+var = ["text", variable, new object()]
+otherVar = var[0]
+var[3] = "other text"
+```
+arrays and dictionaries are equivalent and mostly interchangable; and non-number indices/keys can be used to store the corresponding values.
+```
+var = {"key" : "value", 123 : 456}
+otherVar = var[key]
+otherVar2 = var[123]
+var["key2"] = "value"
+```
+Arrays and dictionaries don't require constant expressions (as in the case of class declarations). The syntax ```instance[key]``` and ```instance.key``` are interchangeable. However, numberical values can't be used as keys in the later format.
+
 Meta-Functions
 -------------
 Meta functions should be used inside class definitions. Any meta function (except __new) which does not match the default signature is considered as a regular function, and will not be recognized if it is called.
