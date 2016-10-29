@@ -39,6 +39,7 @@ CLASS : C L A S S;
 WHILE : W H I L E;
 LOOP : L O O P;
 LOOPPARSE : L O O P P A R S E;
+FOR : F O R;
 REF : R E F;
 THIS : T H I S;
 NEW : N E W;
@@ -116,10 +117,15 @@ loopParse
     : LOOPPARSE '(' exp ',' exp ')' segmentBlock
     ;
 
+forLoop
+    : FOR '(' varAssign? ';' exp? ';' exp? ')' segmentBlock
+    ;
+
 loops
     : loop
     | whileLoop
     | loopParse
+	| forLoop
     ;
 
 varAssign

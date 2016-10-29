@@ -53,6 +53,32 @@ namespace MOSES
 			return null;
 		}
 
+		public override object VisitForLoop([NotNull] MosesParser.ForLoopContext context)
+		{
+			if (context.varAssign() != null)
+			Visit(context.varAssign());
+			bool isTrue = true;
+			while (true)
+			{
+				if (context.exp(0) != null)
+					isTrue = Helper.isTrue(Visit(context.exp(0)));
+				if (!isTrue)
+					break;
+
+                foreach (var lBlock in context.segmentBlock().loopBlock())
+				{
+					if (string.Equals(lBlock.GetText(), "break", StringComparison.CurrentCultureIgnoreCase))
+						break;
+					else if (string.Equals(lBlock.GetText(), "continue", StringComparison.CurrentCultureIgnoreCase))
+						continue;
+					Visit(lBlock.innerfunctionBlock());
+				}
+				if (context.exp(1) != null)
+					Visit(context.exp(1));
+			}
+			return null;
+		}
+
 		public override object VisitLoopParse([NotNull] MosesParser.LoopParseContext context)
 		{
 			string val = Visit(context.exp(0))?.ToString();

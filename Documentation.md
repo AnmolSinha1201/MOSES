@@ -126,8 +126,15 @@ loop (iterationCount i)
 loopParse(string, delimiter)
 	//repeat for EACH delimiter value
 ```
+```
+for(initialization; condition; increment)
+	//repeat the code till condition is met.
+```
+
 * current iteration index can be accessed using variable ```M_Index```
 * current parse value can be accessed using variable ```M_LoopField``` (loopParse only)
+* all three parameters for ```for``` loop are optional. ```initialization``` is executed once when the loop is called, ```condition``` is executed each time before loop body is executed and ```increment``` is executed after.
+* ```for``` loop does not use ```M_Index```. Therefore, script must maintain its own index.
 
 
 Functions
