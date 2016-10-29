@@ -70,7 +70,7 @@ includeBlock
     ;
 
 tryCatchFinally
-    : TRY segmentBlock (CATCH segmentBlock (FINALLY segmentBlock)?)?
+    : TRY segmentBlock (CATCH NAME? segmentBlock (FINALLY segmentBlock)?| FINALLY segmentBlock)
     ;
 
 ifElseLadder

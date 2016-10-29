@@ -286,9 +286,9 @@ include(expression_containing_file_name) //can be variable or a string or a func
 
 Try-Catch-Finally
 -------------
-catch and finally are optional.
+Try must be coupled with catch and/or finally. Catch can catch an exception which displays exception.message
 ```
 try { some code }
-catch{ some code }
+catch{ some code } // or catch varName{ some code}
 finally{ some code }
 ```
