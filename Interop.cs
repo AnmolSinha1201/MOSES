@@ -24,6 +24,8 @@ namespace MOSES
 			INT, DOUBLE, STRING, OBJECT, BOOL, NONE
 		}
 
+		internal Interop() { }
+
 		public delegate object functionDelegate(object context, IContainer[] paramArray);
 
 		HDFVisitor collector = new HDFVisitor();
