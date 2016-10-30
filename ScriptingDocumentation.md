@@ -2,7 +2,25 @@ Scripting Documentation
 -----------
 Document contains common syntax for script side for MOSES.
 
-Variable assign
+Quick Links :
+
+* [Variable Assign](#varAssign)
+* [Escape Characters](#escapeCharacters)
+* [Unary Operations](#unaryOp)
+* [Binary Operations](#binaryOp)
+* [Conditionals](#conditionals)
+* [Loops](#loops)
+* [Functions](#functions)
+* [Classes and Objects](#classes)
+* [Arrays and Dictionaries](#arraysAndDictionaries)
+* [Pre-defined functions](#preDefFunctions)
+* [Meta-functions](#metaFunctions)
+* [Comments](#comments)
+* [Includes](#includes)
+* [Try-Catch-Finally](#tryCatchFinally)
+
+
+<a name="varAssign"></a>Variable assign
 -------------
 ```
 var = var2
@@ -22,7 +40,7 @@ global variables can be accessed using ```_```, and instance variables can be ac
 //also supported +=, -=, *=, /=, %=, **=, .=, |=, &=, ^=, >>=, <<=
 ```
 
-Escape Characters
+<a name="escapeCharacters"></a>Escape Characters
 ----------------
 ```
 \" - Quotes
@@ -33,7 +51,7 @@ Escape Characters
 \\ - Escaped Backslash
 ```
 
-Unary Operators
+<a name="unaryOp"></a>Unary Operators
 -------------
 ```
 var = +variableOrValue
@@ -49,7 +67,7 @@ var++
 var--
 ```
 
-Binary Operators
+<a name="binaryOp"></a>Binary Operators
 -------------
 ```
 varOrValue1 ** varOrValue1 //performs LHS ^ RHS (power operator)
@@ -83,21 +101,21 @@ varOrValue1 && varOrValue2 //conditional AND
 varOrValue1 || varOrValue2 //conditional OR
 ```
 
-Conditionals
+<a name="conditionals"></a>Conditionals
 --------------------
 ```
 if (some expression to be evaluated)
-	//some inline code
+    //some inline code
 ```
 ```
 if (some expression to be evaluated)
 {
-	//some code
+    //some code
 }
 else if (some other condition)
-	//some code
+    //some code
 else
-	//some code
+    //some code
 ```
 ```
 variable = condition ? ifTrue : ifFalse
@@ -108,27 +126,27 @@ variable = condition ?? ifFalse
 variable = expression1 ? expression1 : expression2
 ```
 
-Loops
+<a name="loops"></a>Loops
 -------------
 ```
 while (someCondition)
-	//inline code
+    //inline code
 while (someCondition
 {
-	//block code
+    //block code
 }
 ```
 ```
 loop (iterationCount i)
-	//repeats the code for given iterations i 
+    //repeats the code for given iterations i 
 ```
 ```
 loopParse(string, delimiter)
-	//repeat for EACH delimiter value
+    //repeat for EACH delimiter value
 ```
 ```
 for(initialization; condition; increment)
-	//repeat the code till condition is met.
+    //repeat the code till condition is met.
 ```
 
 * current iteration index can be accessed using variable ```M_Index```
@@ -137,26 +155,26 @@ for(initialization; condition; increment)
 * ```for``` loop does not use ```M_Index```. Therefore, script must maintain its own index.
 
 
-Functions
+<a name="functions"></a>Functions
 -------------
 Declaration :
 ```
 someFunction(var1, var2 = "default value")
 {
-	//code block
+    //code block
 }
 ```
 ```
 someFunction(ref var1, var2) //var1 is passed by reference. Any variable can be passed by ref.
 {
-	//code block
+    //code block
 }
 ```
 ```
 //This function will accept minimum 1 variable. var2 is variadic, and values passed can be accessed as var2[index]. Variadics can ONLY be the last parameter of function signature. They can not have any default value.
 someFunction(var1, var2*)
 {
-	//code block
+    //code block
 }
 ```
 ```
@@ -173,23 +191,23 @@ someFunction().object.otherFunction()
 ```
 If function does not return anything, or returns a null, the LValue will be a null or empty.
 
-Classes and Objects
+<a name="classes"></a>Classes and Objects
 -------------
 ```
 class NAME
 {
-	constantVariable = "string"
+    constantVariable = "string"
     constantVariable2 = 123
     
     someFunction()
     {
-    	//code block
+        //code block
         return this.constantVariable
     }
     
     class NESTED
     {
-    	//code block
+        //code block
     }
 }
 ```
@@ -211,18 +229,18 @@ class NAME
 {
     someFunction()
     {
-    	//code block
+        //code block
         return new this.NESTED()
     }
     
     class NESTED
     {
-    	//code block
+        //code block
     }
 }
 ```
 
-Arrays and dictionaries
+<a name="arraysAndDictionaries"></a>Arrays and dictionaries
 -------------
 Arrays :
 ```
@@ -239,7 +257,7 @@ var["key2"] = "value"
 ```
 Arrays and dictionaries don't require constant expressions (as in the case of class declarations). The syntax ```instance[key]``` and ```instance.key``` are interchangeable. However, numberical values can't be used as keys in the later format.
 
-Pre-defined object functions
+<a name="preDefFunctions"></a>Pre-defined object functions
 -------------
 Several functions are pre-defined for all MOSES objects, and are available with Dictionaries, Arrays or even custom classes.
 ```
@@ -249,7 +267,7 @@ object.haskey(key) - returns boolean value if object has key
 object.remove(key) - removes a key from object (does not maintain order in case of arrays)
 ```
 
-Meta-Functions
+<a name="metaFunctions"></a>Meta-Functions
 -------------
 Meta functions should be used inside class definitions. Any meta function (except __new) which does not match the default signature is considered as a regular function, and will not be recognized if it is called.
 
@@ -264,23 +282,23 @@ Parameters can be of any type (variadic, default valued, regular).
 // A default constructor will be called if caller is passing no parameter (new class()), and class itslef is not overriding it.
 __new(param1)
 {
-	//acts as constructor to the class.
-	//returning nothing returns the instance of an object. Returning some non-null value prevents object creation.
-	// this makes the class a static-only, i.e. no instance of that class can be created.
+    //acts as constructor to the class.
+    //returning nothing returns the instance of an object. Returning some non-null value prevents object creation.
+    // this makes the class a static-only, i.e. no instance of that class can be created.
 }
 ```
 ```
 __delete()
 {
-	//acts as destruuctor to the class.
-	//It can return some value, which will be assigned to its LValue.
+    //acts as destruuctor to the class.
+    //It can return some value, which will be assigned to its LValue.
 }
 ```
 ```
 //invoked when object.function() is called
 __call(functionName, param)
 {
-	// functionName contains name of the function called.
+    // functionName contains name of the function called.
     // param[index] contains parameters.
     // return works like a regular function.
 }
@@ -289,7 +307,7 @@ __call(functionName, param)
 //invoked when object.var = value is used
 __set(varName, value)
 {
-	//varName contains name of the variable.
+    //varName contains name of the variable.
     //value contains the value.
     //if some value is returned, it is assigned to its Placeholder.
 }
@@ -298,12 +316,12 @@ __set(varName, value)
 //invoked when object.var is queried
 __get(varName)
 {
-	//varName contains name of the variable.
-	//returned value is assigned to its placeholder. If nothing is returned, placeholder/LValue becomes null/empty.
+    //varName contains name of the variable.
+    //returned value is assigned to its placeholder. If nothing is returned, placeholder/LValue becomes null/empty.
 }
 ```
 
-Comments
+<a name="comments"></a>Comments
 -------------
 ```
 //line comment
@@ -312,14 +330,14 @@ block comment
 */
 ```
 
-Including files
+<a name="includes"></a>Including files
 -------------
 MOSES includes are dynamic, i.e. they are included during runtime. While this does give flexibility, one must be sure to include files at correct position. Since files are included at runtime, all the constructs and code are processed at that position. This means if the included file contains some construct like class or value, the parent file will not see it unless its been already processed. If there is parse error, an exception is thrown which is processed by host.
 ```
 include(expression_containing_file_name) //can be variable or a string or a function etc.
 ```
 
-Try-Catch-Finally
+<a name="tryCatchFinally"></a>Try-Catch-Finally
 -------------
 Try must be coupled with catch and/or finally. Catch can catch an exception which displays exception.message
 ```
