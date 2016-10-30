@@ -239,6 +239,16 @@ var["key2"] = "value"
 ```
 Arrays and dictionaries don't require constant expressions (as in the case of class declarations). The syntax ```instance[key]``` and ```instance.key``` are interchangeable. However, numberical values can't be used as keys in the later format.
 
+Pre-defined object functions
+-------------
+Several functions are pre-defined for all MOSES objects, and are available with Dictionaries, Arrays or even custom classes.
+```
+object.count() - returns number of keys in given object
+object.clone() - clones to object and returns the cloned instance (duplicates primitive and leaves objects as reference, i.e. creates shallow copy)
+object.haskey(key) - returns boolean value if object has key
+object.remove(key) - removes a key from object (does not maintain order in case of arrays)
+```
+
 Meta-Functions
 -------------
 Meta functions should be used inside class definitions. Any meta function (except __new) which does not match the default signature is considered as a regular function, and will not be recognized if it is called.

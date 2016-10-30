@@ -14,11 +14,11 @@ namespace MOSES
 			public List<functionParameter> functionParamterList = new List<functionParameter>();
 			public Interop.functionDelegate _delegate = null;
 			public bool isVariadic = false;
-			public int minParamCount;
+			public int minParamCount = 0;
 
 			public class functionParameter
 			{
-				public string name;
+				public string name = null;
 				public object defaultValue = null;
 				public bool byRef = false;
 			}

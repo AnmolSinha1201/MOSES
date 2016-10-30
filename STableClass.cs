@@ -11,6 +11,11 @@ namespace MOSES
 		internal ErrorHandler EHandler = null;
 		internal class classDef
 		{
+			public classDef()
+			{
+				funcTable = PredefinedFunctions.funcList;
+			}
+
 			public bool __new = false, __delete = false, __call = false, __set = false, __get = false;
 			public int referenceCount = 0;	
 			public Dictionary<string, variable> varTable = new Dictionary<string, variable>(StringComparer.InvariantCultureIgnoreCase);
