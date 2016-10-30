@@ -14,7 +14,10 @@ Quick Links :
 ----------
 Each MOSES runtime is responsible for running a single script. Multiple runtimes can be hosted at a time. A runtime can be hosted by creating a new instance.
 ```
-var runtime = new MOSES.Runtime() // uses testFile.txt
+var runtime = new MOSES.Runtime()
+runtime.parseCode(string code)
+//parses the code and prepares it for execution. Call execute method to start executing the script.
+
 var runtime = new MOSES.Runtime("fileName.txt")
 ```
 

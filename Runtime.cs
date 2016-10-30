@@ -11,9 +11,6 @@ namespace MOSES
 {
 	public class Runtime
 	{
-		public Runtime() : this("testFile.txt")
-		{}
-
 		public Interop interop = new Interop();
 		MosesVisitor visitor = new MosesVisitor();
 		IParseTree tree = null;
@@ -35,6 +32,19 @@ namespace MOSES
 			set { EHandler.debugParser = value; }
 		}
 
+		public Runtime()
+		{ }
+
+		public void parseCode(string code)
+		{
+			var EHandler = new ErrorHandler();
+			this.EHandler = EHandler;
+			EHandler.parseError = false;
+			
+			var input = new AntlrInputStream(code);
+			sharedRuntime(input, new SymbolTable(), EHandler);
+		}
+
 		public Runtime(string fileName) : this(fileName, new SymbolTable(), new ErrorHandler())
 		{}
 
@@ -46,6 +56,11 @@ namespace MOSES
 			var reader = File.OpenText(fileName);
 			var input = new AntlrInputStream(reader);
 			reader.Close();
+			sharedRuntime(input, STable, EHandler);
+		}
+
+		internal void sharedRuntime(AntlrInputStream input, SymbolTable STable, ErrorHandler EHandler)
+		{
 			var lexer = new MosesLexer(input);
 			CommonTokenStream tokens = new CommonTokenStream(lexer);
 
