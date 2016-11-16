@@ -47,7 +47,7 @@ namespace MOSES
 				case "+": return left + right;
 				case "-": return left - right;
 				case "*": return left * right;
-				case "/": return left / right;
+				case "/": return (double)left / right;
 				case "%": return left % right;
 				case "**": return Math.Pow(left, right);
 			}
@@ -134,7 +134,7 @@ namespace MOSES
 		object OpBitwise(object o1, object o2, string op)
 		{
 			var val1 = Helper.toVarTypeImmediate(o1);
-			var val2 = Helper.toVarTypeImmediate(o1);
+			var val2 = Helper.toVarTypeImmediate(o2);
 			if (val1 == null || val2 == null)
 				return null;
 			if (val1.vType != Interop.variableType.INT || val2.vType != Interop.variableType.INT)
