@@ -77,6 +77,9 @@ namespace MOSES
 			var container1 = Helper.toVarTypeImmediate(Visit(context.exp(0)));
 			var container2 = Helper.toVarTypeImmediate(Visit(context.exp(1)));
 
+			if (container1 == null || container2 == null)
+				return false;
+
 			string op = context.operatorComparison().GetText();
 			if (op == "<" &&
 				(container1.vType == Interop.variableType.INT | container1.vType == Interop.variableType.DOUBLE) &&

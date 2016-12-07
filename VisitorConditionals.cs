@@ -15,7 +15,7 @@ namespace MOSES
 			foreach (var lBlock in context.loopBlock())
 			{
 				retVal = Visit(lBlock);
-				if (retVal.GetType() == typeof(controlFlow))
+				if (retVal?.GetType() == typeof(controlFlow))
 					return retVal;
 			}
 			return null;

@@ -54,7 +54,8 @@ namespace MOSES
 			if (val == null)
 				return null;
 			Interop.variableType type;
-			if (val is Int64 || val is Int32)
+			Int64 outVal;
+			if (val is Int64 || val is Int32 || Int64.TryParse(val.ToString(), out outVal))
 			{
 				type = Interop.variableType.INT;
 				val = Convert.ToInt64(val);
