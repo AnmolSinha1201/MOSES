@@ -1,0 +1,30 @@
+var = 12
+
+loop(var)
+	var2 = M_Index
+
+if (var2 == 12)
+	test9 = 1
+
+while(1)
+{
+	if (M_Index == 12)
+	{
+		test10 = 1
+		break
+	}
+}
+
+var = "some word"
+loopParse(var, " ")
+	if (M_LoopField == "some")
+	{
+		test11 = 1
+		break
+	}
+
+for (var = 1; var < 12; var++)
+	var2 = var
+
+if (var2 == 11)
+	test12 = 1

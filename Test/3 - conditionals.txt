@@ -1,0 +1,13 @@
+var = 123
+
+if (var == 1)
+	test7 = 0
+else if (var == 123)
+	test7 = 1
+
+if (var == 1)
+	test8 = 0
+else if (var == 1234)
+	test8 = 0
+else
+	test8 = 1

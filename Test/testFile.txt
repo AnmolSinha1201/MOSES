@@ -1,0 +1,9 @@
+qwe = new asd()
+zxc = qwe.haskey("asd")
+qwe.qwe = 5	
+
+class asd
+{
+	qwe = 10
+	asd = 15
+}

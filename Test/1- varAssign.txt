@@ -1,0 +1,17 @@
+var1 = 123
+var2 = var1
+var3 = 0x123 //hex
+var4 = 123.123
+var5 = "some string"
+var7 = var6 = 456
+
+test1 = 0
+
+if (var1 == 123 &&
+var2 == var1 &&
+var3 == 0x123 &&
+var4 == 123.123 &&
+var5 == "some string" &&
+var7 == var6 &&
+var6 == 456)
+	test1 = 1
