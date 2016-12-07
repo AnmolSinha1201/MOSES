@@ -25,7 +25,7 @@ namespace MOSES
 			if (Helper.isTrue(Visit(context.exp())))
 			{
 				var retVal = Visit(context.segmentBlock(0));
-				if (retVal.GetType() == typeof(controlFlow))
+				if (retVal?.GetType() == typeof(controlFlow))
 					return retVal;
 			}
 			else if (context.segmentBlock().Count() == 2)
