@@ -55,7 +55,10 @@ namespace MOSES
 				return null;
 			Interop.variableType type;
 			if (val is Int64 || val is Int32)
+			{
 				type = Interop.variableType.INT;
+				val = Convert.ToInt64(val);
+			}
 			else if (val is double || val is float)
 				type = Interop.variableType.DOUBLE;
 			else if (val is string)

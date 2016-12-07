@@ -9,10 +9,25 @@ namespace MOSES
 {
 	partial class MosesVisitor : MosesBaseVisitor<object>
 	{
+		public override object VisitSegmentBlock([NotNull] MosesParser.SegmentBlockContext context)
+		{
+			object retVal = null;
+			foreach (var lBlock in context.loopBlock())
+			{
+				retVal = Visit(lBlock);
+				if (retVal.GetType() == typeof(controlFlow))
+					return retVal;
+			}
+			return null;
+		}
 		public override object VisitIfElseLadder([NotNull] MosesParser.IfElseLadderContext context)
 		{
 			if (Helper.isTrue(Visit(context.exp())))
-				Visit(context.segmentBlock(0));
+			{
+				var retVal = Visit(context.segmentBlock(0));
+				if (retVal.GetType() == typeof(controlFlow))
+					return retVal;
+			}
 			else if (context.segmentBlock().Count() == 2)
 				Visit(context.segmentBlock(1));
 

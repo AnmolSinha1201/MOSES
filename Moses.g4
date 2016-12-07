@@ -82,9 +82,12 @@ returnBlock
     : RETURN exp?
     ;
 
+break : BREAK;
+continue : CONTINUE;
+
 loopBlock
     : innerfunctionBlock
-    | BREAK | CONTINUE
+    | break | continue
     ;
 
 classBlock

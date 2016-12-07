@@ -43,6 +43,11 @@ namespace MOSES
 			return val;
 		}
 
+		public override object VisitReturnBlock([NotNull] MosesParser.ReturnBlockContext context)
+		{
+			return new controlFlow() { type = controlFlow.flowType._return, value = (context.exp() != null ? Visit(context.exp()) : null) };
+		}
+
 		internal object execUDF(Interop.IContainer[] paramList, SymbolTable.functionDef fDef)
 		{
 			var namedList = addNameToParams(fDef.functionParamterList, paramList);
@@ -50,12 +55,9 @@ namespace MOSES
 			object retVal = null;
 			foreach (MosesParser.InnerfunctionBlockContext ifb in (MosesParser.InnerfunctionBlockContext[])fDef.functionAST)
 			{
-				if (ifb.returnBlock() != null)
-				{
-					retVal =  Visit(ifb.returnBlock().exp());
-					break;
-				}
-				Visit(ifb);
+				retVal = Visit(ifb);
+				if (retVal.GetType() == typeof(controlFlow) && ((controlFlow)retVal).type == controlFlow.flowType._return)
+					return ((controlFlow)retVal).value;
 			}
 			STable.restoreFunctionContext();
 			return retVal;
