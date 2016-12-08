@@ -87,14 +87,14 @@ namespace MOSES
 		public override object VisitString([NotNull] MosesParser.StringContext context)
 		{
 			if (bSkip)
-				return base.VisitString(context);
+				return Helper.decorateString(context.STRING().ToString());
 			return Helper.decorateString(context.STRING().ToString());
 		}
 
 		public override object VisitNumber([NotNull] MosesParser.NumberContext context)
 		{
 			if (bSkip)
-				return base.VisitNumber(context);
+				return context.NUMBER().ToString();
 			return context.NUMBER().ToString();
 		}
 
