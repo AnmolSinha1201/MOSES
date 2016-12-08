@@ -60,7 +60,10 @@ namespace MOSES
 			classDef retVal = new classDef();
 			//don't create new copy for classTable (to prevent static calling)
 			retVal.funcTable = new Dictionary<string, List<functionDef>>(cDef.classTable[name].funcTable, StringComparer.InvariantCultureIgnoreCase);
-			retVal.varTable = new Dictionary<string, variable>(cDef.classTable[name].varTable, StringComparer.InvariantCultureIgnoreCase);
+			retVal.varTable = new Dictionary<string, variable>(StringComparer.InvariantCultureIgnoreCase);
+			foreach(var variable in cDef.classTable[name].varTable)
+			{ setVariable(retVal, variable.Key, variable.Value); }
+
 			retVal.__new = cDef.classTable[name].__new;
 			retVal.__delete = cDef.classTable[name].__delete;
 			retVal.__call = cDef.classTable[name].__call;
