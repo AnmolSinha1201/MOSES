@@ -1,0 +1,27 @@
+asd = new name()
+if (asd.constantVariable == "string")
+	test19 = 1
+asd.constantVariable = "qwe"
+if (asd.constantVariable == "qwe")
+	test20 = 1
+if (name.constantVariable == "string")
+	test21 = 1
+if (NAME.someFunction() == "string")
+	test22 = 1
+
+class NAME
+{
+    constantVariable = "string"
+    constantVariable2 = 123
+
+    someFunction()
+    {
+        //code block
+        return this.constantVariable
+    }
+
+    class NESTED
+    {
+        //code block
+    }
+}

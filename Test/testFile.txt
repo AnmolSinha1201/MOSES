@@ -1,9 +1,7 @@
-qwe = new asd()
-zxc = qwe.haskey("asd")
-qwe.qwe = 5	
-
-class asd
-{
-	qwe = 10
-	asd = 15
-}
+include("1 - varAssign.txt")
+include("2 - operators.txt")
+include("3 - conditionals.txt")
+include("4 - loops.txt")
+include("5 - functions.txt")
+include("6 - classes.txt")
+include("7 - objects.txt")

@@ -1,0 +1,38 @@
+f1()
+f1(123)
+f1(123, 456)
+f1(123, 456, "qwe")
+var = 123
+f2(var)
+if (var == 124)
+	test17 = 1
+f3(123, 456, 789)
+
+f1()
+{
+	_.test13 = 1
+}
+
+f1(var)
+{
+	_.test14 = 1
+}
+
+f1(var, var1, var2 = "asd")
+{
+	if (var2 == "asd")
+		_.test15 = 1
+
+	if (var2 != "asd")
+		_.test16 = 1
+}
+
+f3(var, var1, var2, var3 = 123)
+{
+	_.test18 = 1
+}
+
+f2(ref var)
+{
+	var++
+}

@@ -1,0 +1,18 @@
+var = {"key" : "value", 123 : 456}
+if (var["key"] == "value")
+	test23 = 1
+var.key2 = 123
+var["key3"] = 456
+if (var.key2 == 123)
+	test24 = 1
+if (var.key3 == 456)
+	test25 = 1
+if (var[123] == 456)
+	test26 = 1
+
+var = [123, 456]
+var[2] = 789
+if (var[1] == 456)
+	test27 = 1
+if (var[2] == 789)
+	test28 = 1
