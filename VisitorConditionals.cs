@@ -30,7 +30,6 @@ namespace MOSES
 			}
 			else if (context.segmentBlock().Count() == 2)
 				Visit(context.segmentBlock(1));
-
 			return null;
 		}
 

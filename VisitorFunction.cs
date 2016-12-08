@@ -56,7 +56,7 @@ namespace MOSES
 			foreach (MosesParser.InnerfunctionBlockContext ifb in (MosesParser.InnerfunctionBlockContext[])fDef.functionAST)
 			{
 				retVal = Visit(ifb);
-				if (retVal.GetType() == typeof(controlFlow) && ((controlFlow)retVal).type == controlFlow.flowType._return)
+				if (retVal?.GetType() == typeof(controlFlow) && ((controlFlow)retVal).type == controlFlow.flowType._return)
 					return ((controlFlow)retVal).value;
 			}
 			STable.restoreFunctionContext();
